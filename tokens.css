@@ -1,0 +1,58 @@
+/* TV Spec Comparator · design tokens (Hallmark · modern-minimal · custom dark, Linear-school).
+ * Mirrors the :root block inlined in index.html (inlined so the page also runs where external stylesheets are blocked). */
+:root {
+  color-scheme: dark;
+  --bg:        oklch(15% 0.006 265);
+  --bg-rail:   oklch(13% 0.006 265);
+  --surface:   oklch(18.5% 0.007 265);
+  --surface-2: oklch(22% 0.008 265);
+  --surface-3: oklch(26% 0.010 265);
+  --line:      oklch(26% 0.009 265);
+  --line-2:    oklch(34% 0.012 265);
+  --text:      oklch(96% 0.004 265);
+  --text-2:    oklch(80% 0.010 265);
+  --text-3:    oklch(66% 0.012 265);
+  --accent:    oklch(52% 0.170 277);
+  --accent-2:  oklch(74% 0.120 277);
+  --accent-ink: oklch(99% 0.004 277);
+  --accent-wash: oklch(64% 0.150 277 / 0.16);
+  --focus:     oklch(74% 0.140 277);
+  --good:      oklch(83% 0.140 160);
+  --good-wash: oklch(78% 0.140 160 / 0.14);
+  --warn:      oklch(82% 0.120 80);
+  --sel:       oklch(64% 0.150 277 / 0.10);
+  --sel-row:   oklch(21% 0.030 277);
+  --bar-bg:    oklch(15% 0.006 265 / 0.86);
+  --scrim:     oklch(8% 0.004 265 / 0.6);
+  --shadow:    oklch(4% 0.004 265 / 0.6);
+  --hi:        oklch(100% 0 0 / 0.04);
+  /* wall drawing */
+  --wall:      oklch(19% 0.007 265);
+  --wall-grid: oklch(25% 0.009 265);
+  --floor:     oklch(42% 0.012 265);
+  --furn:      oklch(27% 0.010 265);
+  --furn-line: oklch(54% 0.012 265);
+  --tv-frame:  oklch(9% 0.004 265);
+  --tv-screen: oklch(51% 0.045 270);
+  --on-screen: oklch(97% 0.004 265);
+  --handle:    oklch(97% 0.004 265);
+  --quad:      oklch(82% 0.130 85);
+  --label-bg:  oklch(13% 0.006 265 / 0.82);
+  --flat-void: oklch(12% 0.006 265);
+  /* panel-type swatches (semantic) */
+  --t-oled: oklch(72% 0.130 305); --t-rgb: oklch(72% 0.150 15); --t-mini: oklch(72% 0.110 240);
+  --t-qled: oklch(76% 0.090 185); --t-led: oklch(68% 0.015 265); --t-micro: oklch(80% 0.120 75);
+
+  --font-body: "Geist", "Söhne", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --text-xs: 0.75rem; --text-sm: 0.8125rem; --text-base: 0.9375rem; --text-md: 1.0625rem; --text-lg: 1.375rem; --text-xl: 1.875rem;
+  --space-3xs: 0.125rem; --space-2xs: 0.25rem; --space-xs: 0.5rem; --space-sm: 0.75rem; --space-md: 1rem;
+  --space-lg: 1.5rem; --space-xl: 2.5rem; --space-2xl: 4rem;
+  --radius: 8px; --radius-sm: 6px; --radius-lg: 12px;
+  --rail-w: 15.5rem;
+  --ctl: 2rem;
+  --z-raised: 10; --z-sticky: 200; --z-float: 300; --z-modal: 400;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --dur-micro: 120ms; --dur-short: 200ms;
+}

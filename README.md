@@ -1,10 +1,17 @@
 # TV Spec Comparator
 
-A single-page tool for choosing a TV, built on spec data collected from six manufacturers' own websites (842 models as of Oct 17, 2026).
+A TV buyer's guide built on spec data collected from six manufacturers' own websites (842 models as of Oct 17, 2026). The page runs in the order a TV actually gets bought:
 
-- **Compare**: filter the full catalog by brand, panel type, size, refresh rate, HDR formats, gaming features, platform and price. Sizes of the same model are grouped into one row. Pick up to four TVs to see their specs side by side, with the best value in each row highlighted.
-- **Find my TV**: set how much you care about bright-room viewing, dark-room movies, gaming, sports, sound, smart features, price per inch, size for your seating distance and model year. Every TV gets a 0–100 score with a per-criterion breakdown.
-- **Size on your wall**: drag TVs and furniture (sofa, console, door, a 5′9″ person…) on a scale drawing of your wall to see what a 65″ vs 85″ actually looks like.
+1. **Measure the room**: set your seating distance and wall size. A to-scale drawing shows the comfortable size range next to furniture you can drag around. Or switch to **Your photo**: upload a picture of the wall, drag four dots onto the corners of a rectangle on it (the wall itself works best), enter its width, and TVs are drawn at true size in the photo's perspective. The photo never leaves the browser.
+2. **Say what matters**: weight nine questions (bright room, films in the dark, gaming, sport, speakers, casting, price, size fit, model year) and set hard limits.
+3. **Read the shortlist**: every TV scored 0–100 against your weights, with the criteria it beats the field on and where it trails.
+4. **Compare head to head**: two to four picks side by side, normalised specs first, then each maker's own spec sheet.
+
+Behind the stages sits **the catalogue**: every set, filterable, with sizes of the same model grouped into one row.
+
+Design: a dark app shell in the spirit of Linear: a side rail of steps with live counts, one view at a time, keyboard shortcuts (`1`–`4`, `C`, `/`), a floating compare bar and a peek panel for spec sheets. Geist and Geist Mono on cool near-black. Tokens live in `tokens.css`, mirrored inline at the top of `index.html`.
+
+**How the photo placer works.** The four marked corners and the known width define a homography between the wall plane (in inches) and the photo; TVs are placed in wall-plane coordinates and projected back into the image. The rectangle's height is estimated from the perspective (after Zhang & He's whiteboard-scanning method), assuming a typical phone main lens; in synthetic tests that's within about 7% for wall-sized rectangles even with sloppy clicks. A measured height can be typed in for exact scale.
 
 The app is plain HTML/CSS/JS with no build step. It loads `tvs.json` (normalized fields) and lazily loads `raw.json` (each manufacturer's full spec sheet) for the detail and compare views.
 

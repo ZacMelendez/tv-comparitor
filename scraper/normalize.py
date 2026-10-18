@@ -209,36 +209,49 @@ def blob_of(f, extra=""):
 rows = []
 
 # ---------------- Samsung ----------------
+# One spec request returns a whole product group (e.g. S85H + S90H + S95H), so a model's name, URL
+# and price must come from the family that actually lists it as a size, never from the family whose
+# request happened to return it first.
 sam = load("samsung_raw.json") or []
-seen = set()
+def sam_series(mc):
+    m = re.match(r"(?:QN|UN|MRN|MN)\d{2,3}([A-Z]{1,3}\d{1,4}[A-Z]?)", mc or "")
+    return m.group(1) if m else None
+owner, spec_of, origin = {}, {}, {}
 for fam in sam:
-    r = fam["family"]
+    for mc in fam["prices"]: owner.setdefault(mc, fam)
     for m in fam["specs"]:
-        mc = m["modelCode"]
-        if mc in seen: continue
-        seen.add(mc)
-        g = {x["groupName"]: {s["name"]: s["value"] for s in x["specList"]} for x in m.get("fullSpecs", [])}
-        f = flat(g)
-        pr = fam["prices"].get(mc, {})
-        size = num(f.get("Display > Screen Size")) or num(pr.get("title"))
+        spec_of.setdefault(m["modelCode"], m); origin.setdefault(m["modelCode"], fam)
+for mc, m in spec_of.items():
+    fam = owner.get(mc)
+    g = {x["groupName"]: {s["name"]: s["value"] for s in x["specList"]} for x in m.get("fullSpecs", [])}
+    f = flat(g)
+    size = num(f.get("Display > Screen Size"))
+    code_series = sam_series(mc)
+    if fam:
+        r, pr = fam["family"], fam["prices"].get(mc, {})
+        size = size or num(pr.get("title"))
         fname = (r.get("familyMktName") or r.get("name") or "").replace("{size}", str(int(size)) if size else "").replace("{Size}", str(int(size)) if size else "")
         name = fname if re.search(r"\d+\s*(\"|inch|in\b|”)", fname, re.I) else f'{int(size) if size else ""}" {fname}'
-        name = re.sub(r"\s+", " ", name).strip()
-        ser = next((m for m in re.findall(r"\b([A-Z]{1,3}\d{1,4}[A-Z0-9]{0,3})\b", fname) if not re.fullmatch(r"[48]K|20\d\d", m)), None)
-        if ser: ser = type("M", (), {"group": lambda self, i, v=ser: v})()
-        if ser and re.search(r"the frame", fname, re.I): ser = type("M", (), {"group": lambda self, i, v="The Frame " + ser.group(1): v})()
-        url = pr.get("url") or r.get("pdpURL")
-        row = dict(brand="Samsung", model=mc, name=name, series=(ser.group(1) if ser else fname.split(" ")[0]), size=size,
-                   url=("https://www.samsung.com" + url) if url and url.startswith("/") else url,
-                   image=(r.get("images") or {}).get("smImage"), price=pr.get("sale") or r.get("sale_price"),
-                   msrp=pr.get("msrp") or r.get("msrp_price"), currency="USD", region="US",
-                   rating=pr.get("rating"), reviews=pr.get("reviews"), category=r.get("sub_genre") or r.get("sub_category"))
-        row["year"] = year_of(name, f, mc)
-        if size and not row["price"] and fam["prices"]:
-            pass
-        common(row, f, blob_of(f, name))
-        row["raw"] = g
-        rows.append(row)
+        ser = next((x for x in re.findall(r"\b([A-Z]{1,3}\d{1,4}[A-Z0-9]{0,3})\b", fname) if not re.fullmatch(r"[48]K|20\d\d", x)), None) or code_series
+        if ser and re.search(r"the frame", fname, re.I): ser = "The Frame " + ser
+        url, price, msrp = pr.get("url") or r.get("pdpURL"), pr.get("sale"), pr.get("msrp")
+        rating, reviews = pr.get("rating"), pr.get("reviews")
+    else:
+        # Listed in a group's specs but not as a size of any family we saw: keep the specs, drop the price.
+        r = origin[mc]["family"]
+        ptype = f.get("Product Type > Product Type") or ""
+        ser = code_series or mc
+        name = f'{int(size) if size else ""}" {ptype} {ser}'.replace("  ", " ")
+        url, price, msrp, rating, reviews = r.get("pdpURL"), None, None, None, None
+    name = re.sub(r"\s+", " ", name).strip()
+    row = dict(brand="Samsung", model=mc, name=name, series=ser, size=size,
+               url=("https://www.samsung.com" + url) if url and url.startswith("/") else url,
+               image=(r.get("images") or {}).get("smImage"), price=price, msrp=msrp, currency="USD", region="US",
+               rating=rating, reviews=reviews, category=r.get("sub_genre") or r.get("sub_category"))
+    row["year"] = year_of(name, f, mc)
+    common(row, f, blob_of(f, name))
+    row["raw"] = g
+    rows.append(row)
 
 # ---------------- LG ----------------
 for r in load("lg_raw.json") or []:

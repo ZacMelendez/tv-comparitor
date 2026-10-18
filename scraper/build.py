@@ -5,6 +5,7 @@ import re
 raw = {r["id"]: r.pop("raw") for r in rows}
 for r in rows:
     txt = json.dumps(raw[r["id"]]) + " " + (r.get("name") or "")
+    if not raw[r["id"]]: r["nospec"] = True  # no spec sheet collected yet (e.g. rate-limited LG pages)
     r["antiGlare"] = bool(re.search(r"anti[- ]?(reflect|glare)|glare[- ]?free|matte display|low reflection|x-anti reflection|obsidian", txt, re.I))
 for r in rows:
     for k in list(r):
