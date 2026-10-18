@@ -1,0 +1,1056 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Compare 840+ TVs from Samsung, LG, Sony, TCL, Hisense and Vizio, rank them by your priorities, and preview sizes to scale on your wall.">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.45 system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>TV Spec Comparator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: a broadcast-monitor spec sheet — slim header with test-bar strip, filter rail left, dense sortable ledger right, compare tray docked at bottom. */
+:root {
+  --bg: #f3f5f8;
+  --panel: #ffffff;
+  --ink: #12161d;
+  --ink-2: #4a5361;
+  --ink-3: #7c8594;
+  --line: #dde2ea;
+  --line-2: #eceff4;
+  --accent: #2f45ff;
+  --accent-ink: #ffffff;
+  --accent-soft: #e6e9ff;
+  --hl: #fff4c7;
+  --good: #0f8a5f;
+  --t-oled: #7b3fe4;
+  --t-rgb: #e4405f;
+  --t-mini: #1679d6;
+  --t-qled: #0b9a8a;
+  --t-led: #6c7686;
+  --t-micro: #c26b00;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --r: 6px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0d1016; --panel: #151a22; --ink: #e8ecf2; --ink-2: #aab3c1; --ink-3: #7a8494; --line: #262e3a; --line-2: #1c222c;
+  --accent: #7d8bff; --accent-ink: #0d1016; --accent-soft: #232a52; --hl: #3a3415; --good: #3ccf95;
+  --t-oled: #a77bff; --t-rgb: #ff6f8a; --t-mini: #5aa8ff; --t-qled: #3fd0bf; --t-led: #98a2b3; --t-micro: #f2a33a; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0d1016; --panel: #151a22; --ink: #e8ecf2; --ink-2: #aab3c1; --ink-3: #7a8494; --line: #262e3a; --line-2: #1c222c;
+  --accent: #7d8bff; --accent-ink: #0d1016; --accent-soft: #232a52; --hl: #3a3415; --good: #3ccf95;
+  --t-oled: #a77bff; --t-rgb: #ff6f8a; --t-mini: #5aa8ff; --t-qled: #3fd0bf; --t-led: #98a2b3; --t-micro: #f2a33a; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 14px; line-height: 1.45; font-variation-settings: "wdth" 100; }
+button, input, select { font: inherit; color: inherit; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.app { display: grid; grid-template-rows: auto 1fr; height: 100%; }
+header.top { background: var(--panel); border-bottom: 1px solid var(--line); position: relative; }
+.bars { display: grid; grid-template-columns: repeat(7, 1fr); height: 4px; }
+.bars i { display: block; }
+.bars i:nth-child(1){background:#c0c0c0}.bars i:nth-child(2){background:#c0c000}.bars i:nth-child(3){background:#00c0c0}.bars i:nth-child(4){background:#00c000}.bars i:nth-child(5){background:#c000c0}.bars i:nth-child(6){background:#c00000}.bars i:nth-child(7){background:#0000c0}
+.top-inner { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: baseline; padding-block: 14px 12px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1 { margin: 0; font-family: var(--f-display); font-variation-settings: "wdth" 72; font-weight: 800; font-size: 26px; letter-spacing: -0.01em; text-transform: uppercase; text-wrap: balance; }
+h1 span { color: var(--accent); }
+.meta { color: var(--ink-2); font-size: 13px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.meta b { font-family: var(--f-mono); font-weight: 600; color: var(--ink); }
+.top-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+.main { display: grid; grid-template-columns: 268px minmax(0, 1fr); min-height: 0; }
+aside.rail { border-right: 1px solid var(--line); background: var(--panel); overflow-y: auto; padding-block: 14px 120px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px; display: flex; flex-direction: column; gap: 18px; }
+.fgroup { display: flex; flex-direction: column; gap: 8px; }
+.flabel { font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-3); display: flex; justify-content: space-between; align-items: center; }
+.flabel button { border: 0; background: none; color: var(--accent); font-size: 11px; letter-spacing: 0.04em; cursor: pointer; padding: 0; text-transform: none; font-weight: 600; }
+.search { width: 100%; padding: 9px 10px; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 4px 10px; cursor: pointer; font-size: 12.5px; display: inline-flex; gap: 6px; align-items: center; user-select: none; }
+.chip .n { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+.chip[aria-pressed="true"] .n { color: inherit; opacity: .7; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
+.range { display: grid; grid-template-columns: 1fr auto 1fr; gap: 6px; align-items: center; }
+.range input, .rail select { width: 100%; padding: 7px 8px; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg); font-family: var(--f-mono); font-size: 13px; }
+.range span { color: var(--ink-3); }
+.sizebox { width: 100%; height: auto; display: block; touch-action: none; user-select: none; overflow: visible; }
+.sb-frame { fill: var(--bg); stroke: var(--line); stroke-width: 1; }
+.sb-max { fill: var(--accent-soft); stroke: var(--accent); stroke-width: .8; }
+.sb-min { fill: var(--panel); stroke: var(--accent); stroke-width: .8; stroke-dasharray: 2 1.5; }
+.sb-track { stroke: var(--line); stroke-width: 3; stroke-linecap: round; }
+.sb-sel { stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
+.sb-tick { fill: var(--ink-3); font-family: var(--f-mono); font-size: 5.5px; }
+.sb-thumb { cursor: grab; outline: none; }
+.sb-thumb circle { fill: var(--panel); stroke: var(--accent); stroke-width: 2; }
+.sb-thumb:focus-visible circle, .sb-thumb.active circle { fill: var(--accent); }
+.sb-val { fill: var(--ink); font-family: var(--f-mono); font-size: 8px; font-weight: 600; }
+.sb-hit { stroke: transparent; stroke-width: 16; cursor: pointer; }
+.checks { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 8px; }
+.checks label { display: flex; gap: 6px; align-items: center; font-size: 13px; cursor: pointer; }
+.checks input { accent-color: var(--accent); }
+
+.content { min-width: 0; display: flex; flex-direction: column; min-height: 0; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding-block: 10px; padding-left: 16px; padding-right: max(16px, env(safe-area-inset-right, 0px)); border-bottom: 1px solid var(--line); background: var(--bg); }
+.count { font-family: var(--f-mono); font-size: 13px; color: var(--ink-2); }
+.count b { color: var(--ink); }
+.btn { border: 1px solid var(--line); background: var(--panel); border-radius: var(--r); padding: 6px 12px; cursor: pointer; font-weight: 600; font-size: 13px; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn:disabled { opacity: .45; cursor: default; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.seg button { border: 0; background: var(--panel); padding: 6px 10px; font-size: 12.5px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--panel); }
+.tablewrap { overflow: auto; flex: 1; min-height: 0; padding-bottom: 96px; }
+table.grid { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 1060px; font-size: 13px; }
+.grid th { position: sticky; top: 0; z-index: 2; background: var(--panel); text-align: left; font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); font-weight: 700; padding: 9px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; cursor: pointer; user-select: none; }
+.grid th.sorted { color: var(--ink); }
+.grid th .arr { font-family: var(--f-mono); margin-left: 3px; }
+.grid td { padding: 8px 10px; border-bottom: 1px solid var(--line-2); vertical-align: middle; white-space: nowrap; }
+.grid tbody tr { background: var(--panel); cursor: pointer; }
+.grid tbody tr:hover { background: var(--accent-soft); }
+.grid tbody tr.sel { background: var(--hl); }
+/* Select + Model columns stay pinned while the spec columns scroll sideways */
+.grid th:nth-child(1), .grid td:nth-child(1) { position: sticky; left: 0; width: 38px; min-width: 38px; max-width: 38px; }
+.grid th:nth-child(2), .grid td:nth-child(2) { position: sticky; left: 38px; box-shadow: inset -1px 0 0 var(--line), 6px 0 8px -6px rgba(10, 14, 30, .18); }
+.grid td:nth-child(1), .grid td:nth-child(2) { z-index: 1; background: inherit; }
+.grid th:nth-child(1), .grid th:nth-child(2) { z-index: 3; }
+@media (max-width: 600px) { .grid td.name { min-width: 150px; max-width: 170px; } .grid td.name .sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }
+.exp { border: 1px solid var(--line); background: var(--panel); border-radius: 4px; width: 22px; height: 22px; cursor: pointer; font-size: 11px; line-height: 1; color: var(--ink-2); }
+.grid tbody tr.grp-row[aria-expanded="true"] { background: var(--bg); }
+.grid tbody tr.grp-row[aria-expanded="true"] td { border-bottom-color: var(--line); }
+.grid tbody tr.child td { font-size: 12.5px; padding-top: 5px; padding-bottom: 5px; }
+.grid tbody tr.child td.name { padding-left: 26px; }
+.grid tbody tr.child:not(.sel):not(:hover) { background: color-mix(in srgb, var(--bg) 55%, var(--panel)); }
+.grid td.num, .grid th.num { text-align: right; font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.grid td.name { white-space: normal; min-width: 280px; max-width: 420px; }
+.nm { font-weight: 600; line-height: 1.3; }
+.sub { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-3); }
+.cb { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
+.tag { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; }
+.badges { display: flex; gap: 4px; flex-wrap: nowrap; }
+.b { font-family: var(--f-mono); font-size: 10.5px; padding: 1px 5px; border-radius: 3px; border: 1px solid var(--line); color: var(--ink-2); background: var(--bg); }
+.b.on { border-color: transparent; background: var(--ink); color: var(--panel); }
+.muted { color: var(--ink-3); }
+.brand { font-weight: 700; font-variation-settings: "wdth" 85; }
+.price { font-weight: 600; }
+.strike { text-decoration: line-through; color: var(--ink-3); font-size: 11.5px; margin-left: 4px; }
+.empty { padding: 48px 16px; text-align: center; color: var(--ink-2); }
+
+/* tray */
+.tray { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--panel); border-top: 1px solid var(--line); box-shadow: 0 -6px 24px rgba(10, 14, 30, .08); padding-block: 10px calc(10px + env(safe-area-inset-bottom, 0px)); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.tray .slots { display: flex; gap: 8px; flex: 1; min-width: 0; overflow-x: auto; }
+.slot { border: 1px dashed var(--line); border-radius: var(--r); padding: 6px 8px 6px 10px; min-width: 170px; max-width: 240px; display: flex; gap: 8px; align-items: center; font-size: 12.5px; }
+.slot.full { border-style: solid; background: var(--bg); }
+.slot .x { margin-left: auto; border: 0; background: none; cursor: pointer; color: var(--ink-3); font-size: 16px; line-height: 1; padding: 2px 4px; }
+.slot .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+
+/* overlay sheets */
+.sheet { position: fixed; inset: 0; z-index: 40; background: rgba(8, 10, 16, .45); display: flex; justify-content: flex-end; }
+.sheet .panel { background: var(--panel); width: min(1180px, 100%); height: 100%; display: flex; flex-direction: column; box-shadow: -10px 0 40px rgba(0,0,0,.2); }
+.sheet.narrow .panel { width: min(640px, 100%); }
+.sheet header { display: flex; gap: 12px; align-items: flex-start; padding-block: calc(14px + env(safe-area-inset-top, 0px)) 12px; padding-left: 20px; padding-right: max(20px, env(safe-area-inset-right, 0px)); border-bottom: 1px solid var(--line); }
+.sheet h2 { margin: 0; font-family: var(--f-display); font-variation-settings: "wdth" 80; font-size: 20px; font-weight: 800; text-wrap: balance; }
+.sheet .body { overflow: auto; flex: 1; padding-block: 12px 40px; padding-left: 20px; padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.close { margin-left: auto; }
+table.cmp { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 13px; }
+.cmp th, .cmp td { padding: 7px 10px; border-bottom: 1px solid var(--line-2); text-align: left; vertical-align: top; }
+.cmp thead th { position: sticky; top: -12px; background: var(--panel); z-index: 1; border-bottom: 1px solid var(--line); vertical-align: bottom; }
+.cmp tbody th { color: var(--ink-2); font-weight: 500; width: 200px; min-width: 150px; }
+.cmp td { min-width: 180px; }
+.cmp td.best { background: color-mix(in srgb, var(--good) 14%, transparent); font-weight: 600; }
+.cmp tr.diff th { color: var(--ink); font-weight: 700; }
+.cmp tr.grp th { background: var(--bg); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); font-weight: 700; padding-top: 14px; }
+.cmp .mono { font-family: var(--f-mono); font-size: 12.5px; }
+.kv { display: grid; grid-template-columns: minmax(140px, 40%) 1fr; gap: 0; font-size: 13px; }
+.kv div { padding: 6px 0; border-bottom: 1px solid var(--line-2); }
+.kv div:nth-child(odd) { color: var(--ink-2); padding-right: 12px; }
+.kv h3 { grid-column: 1 / -1; margin: 16px 0 4px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.note { background: var(--bg); border: 1px solid var(--line); border-radius: var(--r); padding: 10px 12px; color: var(--ink-2); font-size: 12.5px; }
+.srcs { display: grid; gap: 6px; font-size: 13px; }
+.srcs div { display: grid; grid-template-columns: 90px 1fr; gap: 10px; }
+.loading { padding: 60px 16px; text-align: center; color: var(--ink-2); font-family: var(--f-mono); }
+
+.filters-toggle { display: none; }
+@media (max-width: 860px) {
+  .main { grid-template-columns: minmax(0, 1fr); }
+  aside.rail { display: none; position: fixed; inset: 0; z-index: 30; padding-top: calc(14px + env(safe-area-inset-top, 0px)); }
+  aside.rail.open { display: flex; }
+  .filters-toggle { display: inline-block; }
+  .rail-close { display: inline-block !important; }
+  .cmp tbody th { width: 120px; min-width: 110px; }
+}
+.rail-close { display: none; }
+
+/* tabs */
+.tabs { display: flex; gap: 2px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 3px; }
+.tabs button { border: 0; background: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; color: var(--ink-2); white-space: nowrap; }
+.tabs button[aria-selected="true"] { background: var(--panel); color: var(--ink); box-shadow: 0 1px 3px rgba(10, 14, 30, .12); }
+.view { min-height: 0; overflow: auto; }
+.ph h2 { margin: 0 0 4px; font-family: var(--f-display); font-variation-settings: "wdth" 80; font-weight: 800; font-size: 20px; text-wrap: balance; }
+.ph p { margin: 0; font-size: 13px; }
+.mono { font-family: var(--f-mono); }
+
+/* match */
+.match { display: grid; grid-template-columns: 340px minmax(0, 1fr); min-height: 100%; }
+.prio { background: var(--panel); border-right: 1px solid var(--line); padding-block: 18px 120px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 18px; display: flex; flex-direction: column; gap: 18px; }
+.presets { display: flex; flex-wrap: wrap; gap: 6px; }
+.sliders { display: grid; gap: 12px; }
+.sl { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; }
+.sl label { font-weight: 600; font-size: 13.5px; }
+.sl .w { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); min-width: 64px; text-align: right; }
+.sl input { grid-column: 1 / -1; width: 100%; accent-color: var(--accent); }
+.sl .d { grid-column: 1 / -1; font-size: 11.5px; color: var(--ink-3); }
+.dist { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+.dist input { accent-color: var(--accent); width: 100%; }
+.prio .range input, .prio select, .wallctl .range input, .wallctl select { width: 100%; padding: 7px 8px; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg); font-size: 13px; }
+.results { min-width: 0; padding-block: 14px 120px; padding-left: 18px; padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.rh { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.rank { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.rk { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 14px; align-items: center; }
+.score { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; font-family: var(--f-mono); font-weight: 600; font-size: 19px; background: conic-gradient(var(--accent) calc(var(--s) * 1%), var(--line-2) 0); position: relative; }
+.score::before { content: ""; position: absolute; inset: 5px; border-radius: 50%; background: var(--panel); }
+.score span { position: relative; }
+.rk .nm { font-size: 14.5px; }
+.bars2 { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 6px; }
+.bar2 { display: grid; grid-template-columns: auto 54px; gap: 6px; align-items: center; font-size: 11.5px; color: var(--ink-2); }
+.bar2 i { display: block; height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.bar2 i b { display: block; height: 100%; background: var(--accent); }
+.rk .side { text-align: right; display: grid; gap: 6px; justify-items: end; }
+.why { font-size: 12px; color: var(--ink-2); margin-top: 4px; }
+.flag { font-size: 11px; color: var(--t-micro); }
+
+/* wall */
+.wallwrap { display: grid; grid-template-columns: 320px minmax(0, 1fr); min-height: 100%; }
+.wallctl { background: var(--panel); border-right: 1px solid var(--line); padding-block: 18px 120px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 18px; display: flex; flex-direction: column; gap: 18px; }
+.wallstage { min-width: 0; padding-block: 18px 120px; padding-left: 18px; padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 10px; }
+#wallSvg { width: 100%; height: auto; max-height: calc(100vh - 220px); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; touch-action: none; user-select: none; }
+.wl { display: grid; gap: 6px; }
+.wli { display: grid; grid-template-columns: 12px minmax(0, 1fr) auto; gap: 8px; align-items: center; font-size: 12.5px; border: 1px solid var(--line); border-radius: var(--r); padding: 6px 8px; }
+.wli .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wli button { border: 0; background: none; color: var(--ink-3); cursor: pointer; font-size: 16px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--ink-2); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.wall-bg { fill: var(--bg); stroke: var(--line); }
+.wall-floor { fill: var(--line); }
+.furn { fill: var(--line); stroke: var(--ink-3); stroke-width: .6; cursor: grab; }
+.furn-l { fill: var(--ink-3); font-family: var(--f-body); font-size: 3.2px; pointer-events: none; }
+.tvr { cursor: grab; }
+.tv-screen { fill: color-mix(in srgb, var(--ink) 88%, var(--accent)); }
+.tv-l { fill: var(--ink); font-family: var(--f-mono); font-size: 3.4px; font-weight: 600; pointer-events: none; }
+.tv-l2 { fill: var(--panel); font-family: var(--f-mono); font-size: 3px; pointer-events: none; }
+.grid-l { stroke: var(--line-2); stroke-width: .3; }
+.grid-t { fill: var(--ink-3); font-family: var(--f-mono); font-size: 3px; }
+.eye { stroke: var(--accent); stroke-width: .5; stroke-dasharray: 2 2; }
+.eye-t { fill: var(--accent); font-family: var(--f-mono); font-size: 3px; }
+@media (max-width: 860px) {
+  .match, .wallwrap { grid-template-columns: minmax(0, 1fr); }
+  .prio, .wallctl { border-right: 0; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
+  .results, .wallstage { padding-left: max(16px, env(safe-area-inset-left, 0px)); }
+  .rk { grid-template-columns: 56px minmax(0, 1fr); }
+  .rk .side { grid-column: 1 / -1; justify-items: start; text-align: left; grid-auto-flow: column; }
+  .tabs { order: 3; width: 100%; overflow-x: auto; }
+}
+@media (prefers-reduced-motion: no-preference) { .grid tbody tr { transition: background .12s; } }
+</style>
+
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="top-inner">
+      <h1>TV Spec <span>Comparator</span></h1>
+      <div class="meta" id="meta">Loading catalog…</div>
+      <nav class="tabs" role="tablist" aria-label="Views">
+        <button type="button" role="tab" data-tab="compare" aria-selected="true">Compare</button>
+        <button type="button" role="tab" data-tab="match" aria-selected="false">Find my TV</button>
+        <button type="button" role="tab" data-tab="wall" aria-selected="false">Size on your wall</button>
+      </nav>
+      <div class="top-actions">
+        <button class="btn" id="aboutBtn" type="button">Sources &amp; notes</button>
+      </div>
+    </div>
+  </header>
+  <div class="view" id="view-match" hidden>
+    <div class="match">
+      <section class="prio" aria-label="Your priorities">
+        <div class="ph"><h2>What matters to you</h2><p class="muted">Drag each slider to say how much it matters. Every TV gets a 0–100 score from those weights.</p></div>
+        <div class="presets" id="presets"></div>
+        <div id="sliders" class="sliders"></div>
+        <div class="fgroup">
+          <div class="flabel">Seating distance</div>
+          <div class="dist"><input id="distFt" type="range" min="4" max="20" step="0.5" value="9"><b id="distOut" class="mono">9 ft</b></div>
+          <div class="muted" id="distHint" style="font-size:12.5px"></div>
+        </div>
+        <div class="fgroup">
+          <div class="flabel">Hard limits</div>
+          <div class="range"><input id="mBudget" type="number" inputmode="numeric" placeholder="Max $"><span></span><select id="mOs"><option value="">Any platform</option></select></div>
+          <div class="range"><input id="mSizeMin" type="number" inputmode="numeric" placeholder="Min size"><span>–</span><input id="mSizeMax" type="number" inputmode="numeric" placeholder="Max size"></div>
+          <div class="checks"><label><input type="checkbox" id="mCurrent" checked> Current models only</label><label><input type="checkbox" id="mPriced"> Has a price</label></div>
+          <div class="chips" id="mBrands"></div>
+        </div>
+      </section>
+      <section class="results" aria-label="Ranked results">
+        <div class="rh"><div class="count" id="mCount"></div><div class="seg" role="group" aria-label="Rows"><button type="button" id="mAll" aria-pressed="false">Every size</button><button type="button" id="mSeries" aria-pressed="true">Best size per series</button></div></div>
+        <ol class="rank" id="rank"></ol>
+      </section>
+    </div>
+  </div>
+  <div class="view" id="view-wall" hidden>
+    <div class="wallwrap">
+      <section class="wallctl" aria-label="Wall settings">
+        <div class="ph"><h2>Size on your wall</h2><p class="muted">Everything is drawn to scale. Drag TVs and furniture to arrange them.</p></div>
+        <div class="fgroup"><div class="flabel">Wall (feet)</div>
+          <div class="range"><input id="wallW" type="number" step="0.5" value="14" aria-label="Wall width in feet"><span>×</span><input id="wallH" type="number" step="0.5" value="8.5" aria-label="Wall height in feet"></div></div>
+        <div class="fgroup"><div class="flabel">TVs on the wall</div>
+          <div class="wl" id="wallTvs"></div>
+          <div class="range" style="grid-template-columns:1fr auto"><select id="addSize" aria-label="Add a generic size"></select><button class="btn" type="button" id="addSizeBtn">Add</button></div>
+          <button class="btn" type="button" id="addCmpBtn">Add TVs from my compare list</button>
+          <label class="checks" style="display:flex;gap:6px;font-size:13px"><input type="checkbox" id="overlay"> Stack outlines at one spot</label>
+        </div>
+        <div class="fgroup"><div class="flabel">Furniture</div><div class="chips" id="furnChips"></div></div>
+        <div class="fgroup"><div class="flabel">Viewing</div>
+          <div class="muted" id="wallHint" style="font-size:12.5px"></div></div>
+      </section>
+      <section class="wallstage" aria-label="Wall preview"><svg id="wallSvg" role="img" aria-label="Scale drawing of TVs on a wall"></svg><div class="legend" id="wallLegend"></div></section>
+    </div>
+  </div>
+  <div class="main view" id="view-compare">
+    <aside class="rail" id="rail" aria-label="Filters">
+      <div class="fgroup" style="flex-direction:row;align-items:center">
+        <input class="search" id="q" type="search" placeholder="Search model, series, feature…" autocomplete="off">
+        <button class="btn rail-close" id="railClose" type="button">Done</button>
+      </div>
+      <div class="fgroup"><div class="flabel">Brand <button type="button" data-clear="brand">Clear</button></div><div class="chips" id="f-brand"></div></div>
+      <div class="fgroup"><div class="flabel">Panel type <button type="button" data-clear="tech">Clear</button></div><div class="chips" id="f-tech"></div></div>
+      <div class="fgroup"><div class="flabel">Screen size (in) <button type="button" id="sizeAny">Any size</button></div>
+        <svg id="sizeSvg" class="sizebox" viewBox="-8 -8 176 106" aria-label="Screen size range. Drag the two handles along the diagonal."></svg>
+        <div class="range"><input id="sizeMin" type="number" inputmode="numeric" placeholder="min"><span>–</span><input id="sizeMax" type="number" inputmode="numeric" placeholder="max"></div>
+        <div class="chips" id="f-sizepreset"></div>
+      </div>
+      <div class="fgroup"><div class="flabel">Max refresh rate</div><div class="chips" id="f-refresh"></div></div>
+      <div class="fgroup"><div class="flabel">Resolution <button type="button" data-clear="resolution">Clear</button></div><div class="chips" id="f-resolution"></div></div>
+      <div class="fgroup"><div class="flabel">Model year <button type="button" data-clear="year">Clear</button></div><div class="chips" id="f-year"></div></div>
+      <div class="fgroup"><div class="flabel">Smart platform <button type="button" data-clear="os">Clear</button></div><div class="chips" id="f-os"></div></div>
+      <div class="fgroup"><div class="flabel">Must have</div>
+        <div class="checks" id="f-feat"></div>
+      </div>
+      <div class="fgroup"><div class="flabel">Price (USD, manufacturer site)</div>
+        <div class="range"><input id="priceMin" type="number" inputmode="numeric" placeholder="min"><span>–</span><input id="priceMax" type="number" inputmode="numeric" placeholder="max"></div>
+        <label class="checks" style="display:flex;gap:6px;font-size:13px"><input type="checkbox" id="hasPrice"> Only models with a listed price</label>
+      </div>
+      <button class="btn" id="resetAll" type="button">Reset all filters</button>
+    </aside>
+    <section class="content">
+      <div class="toolbar">
+        <button class="btn filters-toggle" id="railOpen" type="button">Filters</button>
+        <div class="count" id="count"></div>
+        <div class="seg" role="group" aria-label="Rows">
+          <button type="button" id="viewGroup" aria-pressed="true">Group sizes</button>
+          <button type="button" id="viewAll" aria-pressed="false">Every size</button>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+          <label for="sortSel" class="muted" style="font-size:12.5px">Sort</label>
+          <select id="sortSel" class="btn" style="font-weight:500"></select>
+        </div>
+      </div>
+      <div class="tablewrap" id="tablewrap">
+        <div class="loading" id="loading">Loading 800+ televisions…</div>
+        <table class="grid" id="grid" hidden>
+          <thead><tr id="thead"></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div class="empty" id="empty" hidden>No TVs match these filters. Loosen a filter or <button class="btn" type="button" id="emptyReset">reset all</button>.</div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="tray" id="tray">
+  <div class="slots" id="slots"></div>
+  <button class="btn" id="clearCmp" type="button">Clear</button>
+  <button class="btn primary" id="doCmp" type="button" disabled>Compare</button>
+</div>
+
+<div class="sheet" id="cmpSheet" hidden><div class="panel" role="dialog" aria-modal="true" aria-labelledby="cmpTitle">
+  <header><div><h2 id="cmpTitle">Side-by-side</h2><div class="sub" id="cmpSub"></div></div>
+    <label class="checks" style="display:flex;gap:6px;align-items:center;font-size:13px;margin-left:auto"><input type="checkbox" id="onlyDiff"> Only rows that differ</label>
+    <button class="btn" type="button" data-close>Close</button></header>
+  <div class="body" id="cmpBody"></div>
+</div></div>
+
+<div class="sheet narrow" id="detSheet" hidden><div class="panel" role="dialog" aria-modal="true" aria-labelledby="detTitle">
+  <header><div><h2 id="detTitle"></h2><div class="sub" id="detSub"></div></div><button class="btn close" type="button" data-close>Close</button></header>
+  <div class="body" id="detBody"></div>
+</div></div>
+
+<div class="sheet narrow" id="aboutSheet" hidden><div class="panel" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+  <header><div><h2 id="aboutTitle">Sources &amp; notes</h2></div><button class="btn close" type="button" data-close>Close</button></header>
+  <div class="body" id="aboutBody"></div>
+</div></div>
+
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const TECH = { "OLED": "--t-oled", "RGB Mini-LED": "--t-rgb", "Mini-LED": "--t-mini", "QLED / QNED": "--t-qled", "LED": "--t-led", "MicroLED": "--t-micro" };
+const TECH_ORDER = ["OLED", "RGB Mini-LED", "Mini-LED", "QLED / QNED", "LED", "MicroLED"];
+const FEATS = [
+  ["dolbyVision", "Dolby Vision"], ["hdr10plus", "HDR10+"], ["hdmi21", "HDMI 2.1 ports"], ["vrr", "VRR"],
+  ["earc", "eARC"], ["atmos", "Dolby Atmos"], ["freesync", "FreeSync"], ["gsync", "G-Sync"],
+  ["atsc3", "ATSC 3.0"], ["airplay", "AirPlay"], ["imax", "IMAX Enh."], ["filmmaker", "Filmmaker"],
+];
+const SORTS = [
+  ["brand", "Brand, series, size"], ["priceAsc", "Price: low to high"], ["priceDesc", "Price: high to low"],
+  ["sizeDesc", "Size: largest"], ["sizeAsc", "Size: smallest"], ["refreshDesc", "Refresh: fastest"],
+  ["yearDesc", "Newest model year"], ["nitsDesc", "Peak brightness"], ["audioDesc", "Speaker power"], ["valueAsc", "Price per inch"],
+];
+const store = { get(k, d) { try { const v = localStorage.getItem("tvc:" + k); return v ? JSON.parse(v) : d; } catch { return d; } },
+                set(k, v) { try { localStorage.setItem("tvc:" + k, JSON.stringify(v)); } catch {} } };
+
+let ROWS = [], RAW = null, META = {};
+const st = { q: "", brand: new Set(), tech: new Set(), resolution: new Set(), year: new Set(), os: new Set(), feat: new Set(),
+  sizeMin: null, sizeMax: null, priceMin: null, priceMax: null, hasPrice: false, refresh: 0, sort: "brand", group: true, open: new Set(),
+  cmp: store.get("cmp", []) };
+
+const money = (v, c) => v == null ? "" : (c === "USD" || !c ? "$" : c + " ") + Math.round(v).toLocaleString("en-US");
+const hz = r => r.refreshMax ? (r.refresh && r.refresh !== r.refreshMax ? `${r.refresh}<span class="muted">/</span>${r.refreshMax}` : `${r.refreshMax}`) : "";
+const techTag = t => `<span class="tag"><span class="dot" style="background:var(${TECH[t] || "--t-led"})"></span>${esc(t)}</span>`;
+
+function chips(el, key, values, counts, fmt = v => v) {
+  el.innerHTML = values.map(v => `<button type="button" class="chip" data-k="${key}" data-v="${esc(v)}" aria-pressed="${st[key].has(String(v))}">${key === "tech" ? `<span class="dot" style="background:var(${TECH[v]})"></span>` : ""}${esc(fmt(v))}<span class="n">${counts[v] || 0}</span></button>`).join("");
+}
+function countBy(rows, f) { const c = {}; for (const r of rows) { const v = f(r); if (v != null && v !== "") c[v] = (c[v] || 0) + 1; } return c; }
+
+function buildFilters() {
+  const brands = [...new Set(ROWS.map(r => r.brand))].sort();
+  chips($("#f-brand"), "brand", brands, countBy(ROWS, r => r.brand));
+  chips($("#f-tech"), "tech", TECH_ORDER.filter(t => ROWS.some(r => r.tech === t)), countBy(ROWS, r => r.tech));
+  chips($("#f-resolution"), "resolution", ["8K", "4K", "1080p", "720p"].filter(x => ROWS.some(r => r.resolution === x)), countBy(ROWS, r => r.resolution));
+  const yrs = [...new Set(ROWS.map(r => r.year).filter(Boolean))].sort((a, b) => b - a);
+  chips($("#f-year"), "year", yrs.map(String), countBy(ROWS, r => r.year && String(r.year)));
+  const oss = Object.entries(countBy(ROWS, r => r.os)).sort((a, b) => b[1] - a[1]).map(x => x[0]);
+  chips($("#f-os"), "os", oss, countBy(ROWS, r => r.os));
+  $("#f-refresh").innerHTML = [[0, "Any"], [100, "100 Hz+"], [120, "120 Hz+"], [144, "144 Hz+"], [165, "165 Hz+"]].map(([v, l]) =>
+    `<button type="button" class="chip" data-refresh="${v}" aria-pressed="${st.refresh === v}">${l}</button>`).join("");
+  $("#f-sizepreset").innerHTML = [["≤ 50", 0, 50], ["55–65", 55, 65], ["70–77", 70, 77], ["80–89", 80, 89], ["98+", 98, 999]].map(([l, a, b]) =>
+    `<button type="button" class="chip" data-smin="${a}" data-smax="${b}" aria-pressed="${st.sizeMin === a && st.sizeMax === b}">${l}</button>`).join("");
+  $("#f-feat").innerHTML = FEATS.map(([k, l]) => `<label><input type="checkbox" data-feat="${k}" ${st.feat.has(k) ? "checked" : ""}> ${l}</label>`).join("");
+}
+
+function matches(r) {
+  if (st.brand.size && !st.brand.has(r.brand)) return false;
+  if (st.tech.size && !st.tech.has(r.tech)) return false;
+  if (st.resolution.size && !st.resolution.has(r.resolution)) return false;
+  if (st.year.size && !st.year.has(String(r.year))) return false;
+  if (st.os.size && !st.os.has(r.os)) return false;
+  if (st.sizeMin != null && !(r.size >= st.sizeMin)) return false;
+  if (st.sizeMax != null && !(r.size <= st.sizeMax)) return false;
+  if (st.refresh && !((r.refreshMax || 0) >= st.refresh)) return false;
+  if (st.hasPrice && r.price == null) return false;
+  if (st.priceMin != null && !(r.price >= st.priceMin)) return false;
+  if (st.priceMax != null && !(r.price != null && r.price <= st.priceMax)) return false;
+  for (const f of st.feat) { if (f === "hdmi21") { if (!(r.hdmi21 > 0)) return false; } else if (!r[f]) return false; }
+  if (st.q) { const hay = r._hay; for (const w of st.q.toLowerCase().split(/\s+/).filter(Boolean)) if (!hay.includes(w)) return false; }
+  return true;
+}
+const cmpNum = (a, b, dir) => (a == null) - (b == null) || dir * ((a ?? 0) - (b ?? 0));
+function sorter(k) {
+  switch (k) {
+    case "priceAsc": return (a, b) => cmpNum(a.price, b.price, 1);
+    case "priceDesc": return (a, b) => cmpNum(a.price, b.price, -1);
+    case "sizeDesc": return (a, b) => cmpNum(a.size, b.size, -1);
+    case "sizeAsc": return (a, b) => cmpNum(a.size, b.size, 1);
+    case "refreshDesc": return (a, b) => cmpNum(a.refreshMax, b.refreshMax, -1) || cmpNum(a.size, b.size, 1);
+    case "yearDesc": return (a, b) => cmpNum(a.year, b.year, -1) || a.brand.localeCompare(b.brand);
+    case "nitsDesc": return (a, b) => cmpNum(a.nits, b.nits, -1);
+    case "audioDesc": return (a, b) => cmpNum(a.audioW, b.audioW, -1);
+    case "valueAsc": return (a, b) => cmpNum(a.price && a.size ? a.price / a.size : null, b.price && b.size ? b.price / b.size : null, 1);
+    default: return (a, b) => a.brand.localeCompare(b.brand) || String(a.series || "").localeCompare(String(b.series || "")) || (a.size || 0) - (b.size || 0);
+  }
+}
+
+const COLS = [
+  ["", "cb"], ["Model", "name"], ["Size", "size", "num"], ["Year", "year", "num"], ["Panel", "tech"], ["Res", "resolution"],
+  ["Hz", "refreshMax", "num"], ["HDR", "hdr"], ["HDMI", "hdmi", "num"], ["Gaming", "game"], ["Platform", "os"], ["Audio", "audioW", "num"], ["Price", "price", "num"],
+];
+const COLSORT = { name: "brand", size: "sizeDesc", year: "yearDesc", refreshMax: "refreshDesc", audioW: "audioDesc", price: "priceAsc" };
+
+// Fields that legitimately change with screen size; everything else must match for sizes to be grouped.
+const SIZE_ONLY = new Set(["id", "model", "name", "url", "image", "size", "price", "msrp", "rating", "reviews", "weightLb", "dimsIn", "vesa", "powerW", "sharedFrom", "derived", "_hay"]);
+function groupKey(r) { return Object.keys(r).filter(k => !SIZE_ONLY.has(k)).sort().map(k => k + "=" + JSON.stringify(r[k])).join("|"); }
+
+function rowHtml(r, cmp, child) {
+  return `<tr data-id="${esc(r.id)}" class="${cmp.has(r.id) ? "sel" : ""} ${child ? "child" : ""}">
+    <td><input type="checkbox" class="cb" aria-label="Add ${esc(r.model)} to compare" data-cmp="${esc(r.id)}" ${cmp.has(r.id) ? "checked" : ""}></td>
+    <td class="name">${child ? `<div class="nm"><span class="mono">${r.size || "?"}"</span> <span class="sub">${esc(r.model)}</span></div>` : `<div class="nm"><span class="brand">${esc(r.brand)}</span> ${esc(r.series || "")}</div><div class="sub">${esc(r.model)}</div>`}</td>
+    ${specCells(r, r.size ? r.size + '"' : "", priceCell(r))}</tr>`;
+}
+function specCells(r, sizeTxt, priceTxt) {
+  const hdr = `<span class="badges"><span class="b ${r.dolbyVision ? "on" : ""}">DV</span><span class="b ${r.hdr10plus ? "on" : ""}">HDR10+</span></span>`;
+  const game = [r.hdmi21 > 0 ? `${r.hdmi21}× 2.1` : null, r.vrr ? "VRR" : null, r.gsync ? "G-Sync" : r.freesync ? "FreeSync" : null].filter(Boolean).join(" · ");
+  return `<td class="num">${sizeTxt}</td><td class="num">${r.year || '<span class="muted">—</span>'}</td>
+    <td>${techTag(r.tech)}</td><td>${esc(r.resolution || "")}</td><td class="num">${hz(r) || '<span class="muted">—</span>'}</td>
+    <td>${hdr}</td><td class="num">${r.hdmi ?? '<span class="muted">—</span>'}</td><td><span class="sub">${game || "—"}</span></td>
+    <td>${esc(r.os || "")}</td><td class="num">${r.audioW ? r.audioW + " W" : '<span class="muted">—</span>'}${r.channels ? `<div class="sub">${esc(r.channels)} ch</div>` : ""}</td>
+    <td class="num">${priceTxt}</td>`;
+}
+const priceCell = r => r.price != null ? `<span class="price">${money(r.price)}</span>${r.msrp && r.msrp > r.price ? `<span class="strike">${money(r.msrp)}</span>` : ""}` : '<span class="muted">—</span>';
+
+function render() {
+  const rows = ROWS.filter(matches).sort(sorter(st.sort));
+  // Build display items: groups keep the position of their first (best-sorted) member.
+  let items = [];
+  if (st.group) {
+    const idx = new Map();
+    for (const r of rows) { const k = groupKey(r); if (!idx.has(k)) { idx.set(k, items.length); items.push({ key: k, members: [] }); } items[idx.get(k)].members.push(r); }
+  } else items = rows.map(r => ({ key: r.id, members: [r] }));
+  const total = ROWS.length;
+  const multi = items.filter(g => g.members.length > 1).length;
+  $("#count").innerHTML = `<b>${rows.length.toLocaleString()}</b> TVs of ${total.toLocaleString()}` + (st.group ? ` <span class="muted">in ${items.length.toLocaleString()} rows · ${multi} grouped by size</span>` : "");
+  $("#thead").innerHTML = COLS.map(([l, k, c]) => `<th class="${c || ""} ${COLSORT[k] === st.sort ? "sorted" : ""}" data-col="${k}">${l}${COLSORT[k] === st.sort ? '<span class="arr">↓</span>' : ""}</th>`).join("");
+  const cmp = new Set(st.cmp);
+  let html = "", n = 0;
+  for (const g of items) {
+    if (n > 1200) break;
+    if (g.members.length === 1) { html += rowHtml(g.members[0], cmp, false); n++; continue; }
+    const ms = g.members.slice().sort((a, b) => (a.size || 0) - (b.size || 0)), r = ms[0];
+    const open = st.open.has(g.key), picked = ms.filter(m => cmp.has(m.id)).length;
+    const prices = ms.map(m => m.price).filter(p => p != null);
+    const sizes = [...new Set(ms.map(m => m.size).filter(Boolean))];
+    const sizeTxt = `<span title="${esc(sizes.join(", "))}">${Math.min(...sizes)}–${Math.max(...sizes)}"</span><div class="sub">${sizes.length} size${sizes.length > 1 ? "s" : ""}${ms.length > sizes.length ? ` · ${ms.length} models` : ""}</div>`;
+    const priceTxt = prices.length ? `<span class="muted" style="font-size:11.5px">from</span> <span class="price">${money(Math.min(...prices))}</span>` : '<span class="muted">—</span>';
+    const fam = r.model.replace(/^(OLED|QN|UN|MRN|MN|K-)?\d{2,3}/, (m, p) => (p || "") + "··");
+    html += `<tr class="grp-row ${picked ? "sel" : ""}" data-group="${esc(g.key)}" aria-expanded="${open}">
+      <td><button type="button" class="exp" data-exp="${esc(g.key)}" aria-label="${open ? "Hide" : "Show"} ${ms.length} sizes">${open ? "▾" : "▸"}</button></td>
+      <td class="name"><div class="nm"><span class="brand">${esc(r.brand)}</span> ${esc(r.series || "")}</div><div class="sub">${esc(fam)} · ${esc(sizes.join(", "))}"${picked ? ` · ${picked} in compare` : ""}</div></td>
+      ${specCells(r, sizeTxt, priceTxt)}</tr>`;
+    n++;
+    if (open) for (const m of ms) { html += rowHtml(m, cmp, true); n++; }
+  }
+  $("#tbody").innerHTML = html;
+  drawSizeBox();
+  $("#grid").hidden = rows.length === 0; $("#empty").hidden = rows.length !== 0;
+  renderTray();
+}
+
+function renderTray() {
+  const items = st.cmp.map(id => ROWS.find(r => r.id === id)).filter(Boolean);
+  const slots = [];
+  for (let i = 0; i < 4; i++) {
+    const r = items[i];
+    slots.push(r ? `<div class="slot full"><span class="dot" style="background:var(${TECH[r.tech]})"></span><span class="t"><b>${esc(r.brand)}</b> ${esc(r.model)}</span><button class="x" type="button" data-uncmp="${esc(r.id)}" aria-label="Remove ${esc(r.model)}">×</button></div>`
+                 : `<div class="slot muted">${i === 0 ? "Tick up to 4 TVs to compare" : "Empty slot"}</div>`);
+  }
+  $("#slots").innerHTML = slots.join("");
+  $("#doCmp").disabled = items.length < 2;
+  $("#doCmp").textContent = items.length >= 2 ? `Compare ${items.length}` : "Compare";
+  store.set("cmp", st.cmp);
+}
+
+function toggleCmp(id) {
+  const i = st.cmp.indexOf(id);
+  if (i >= 0) st.cmp.splice(i, 1); else { if (st.cmp.length >= 4) st.cmp.shift(); st.cmp.push(id); }
+  render();
+}
+
+async function ensureRaw() {
+  if (RAW) return RAW;
+  try { RAW = await (await fetch("raw.json")).json(); } catch { RAW = {}; }
+  return RAW;
+}
+
+const FIELDS = [
+  ["Overview", [
+    ["Brand", r => r.brand], ["Model", r => r.model, "mono"], ["Series", r => r.series], ["Screen size", r => r.size && r.size + '"', null, r => r.size, 1],
+    ["Model year", r => r.year, null, r => r.year, 1], ["Price (mfr site)", r => r.price != null ? money(r.price) + (r.msrp > r.price ? ` (list ${money(r.msrp)})` : "") : "—", null, r => r.price, -1],
+    ["Price per inch", r => r.price && r.size ? money(r.price / r.size) : "—", null, r => r.price && r.size ? r.price / r.size : null, -1],
+  ]],
+  ["Picture", [
+    ["Panel type", r => r.tech], ["Resolution", r => r.resolution], ["Native refresh", r => r.refresh && r.refresh + " Hz", null, r => r.refresh, 1],
+    ["Max refresh / VRR", r => r.refreshMax && r.refreshMax + " Hz", null, r => r.refreshMax, 1], ["Local dimming", r => r.localDimming],
+    ["Dimming zones", r => r.zones, null, r => r.zones, 1], ["Peak brightness (claimed)", r => r.nits && r.nits.toLocaleString() + " nits", null, r => r.nits, 1],
+    ["Processor", r => r.processor],
+    ["Dolby Vision", r => yesno(r.dolbyVision)], ["HDR10+", r => yesno(r.hdr10plus)], ["HLG", r => yesno(r.hlg)], ["IMAX Enhanced", r => yesno(r.imax)], ["Filmmaker Mode", r => yesno(r.filmmaker)],
+  ]],
+  ["Gaming & inputs", [
+    ["HDMI inputs", r => r.hdmi, null, r => r.hdmi, 1], ["HDMI 2.1 / 4K120 ports", r => r.hdmi21, null, r => r.hdmi21, 1], ["eARC", r => yesno(r.earc)],
+    ["VRR", r => yesno(r.vrr)], ["ALLM", r => yesno(r.allm)], ["AMD FreeSync", r => yesno(r.freesync)], ["NVIDIA G-Sync", r => yesno(r.gsync)], ["USB ports", r => r.usb],
+  ]],
+  ["Sound", [
+    ["Speaker power", r => r.audioW && r.audioW + " W", null, r => r.audioW, 1], ["Channels", r => r.channels], ["Dolby Atmos", r => yesno(r.atmos)], ["DTS:X / DTS Virtual:X", r => yesno(r.dtsx)],
+  ]],
+  ["Smart & connectivity", [
+    ["Platform", r => r.os], ["Wi-Fi", r => r.wifi], ["Bluetooth", r => yesno(r.bluetooth)], ["AirPlay", r => yesno(r.airplay)], ["Chromecast / Google Cast", r => yesno(r.chromecast)],
+    ["Alexa", r => yesno(r.alexa)], ["ATSC 3.0 (NextGen TV)", r => yesno(r.atsc3)],
+  ]],
+  ["Physical", [
+    ["Weight without stand", r => r.weightLb && r.weightLb + " lb", null, r => r.weightLb, -1], ["Dimensions without stand", r => r.dimsIn], ["VESA mount", r => r.vesa],
+    ["Power (typical)", r => r.powerW && r.powerW + " W", null, r => r.powerW, -1],
+  ]],
+];
+const yesno = v => v === true ? "Yes" : v === false ? "—" : v;
+
+async function openCompare() {
+  const items = st.cmp.map(id => ROWS.find(r => r.id === id)).filter(Boolean);
+  if (items.length < 2) return;
+  $("#cmpSheet").hidden = false; document.body.style.overflow = "hidden";
+  $("#cmpSub").textContent = items.map(r => r.brand + " " + r.model).join("  ·  ");
+  $("#cmpBody").innerHTML = '<div class="loading">Loading full spec sheets…</div>';
+  const raw = await ensureRaw();
+  drawCompare(items, raw);
+}
+function drawCompare(items, raw) {
+  const onlyDiff = $("#onlyDiff").checked;
+  let h = `<div style="overflow-x:auto"><table class="cmp"><thead><tr><th></th>${items.map(r => `<th><div class="nm"><span class="brand">${esc(r.brand)}</span> ${esc(r.series || "")}</div><div class="sub">${esc(r.model)} · ${r.size || "?"}"</div><div style="margin-top:4px">${techTag(r.tech)}</div><a class="sub" href="${esc(r.url)}" target="_blank" rel="noopener">Manufacturer page ↗</a></th>`).join("")}</tr></thead><tbody>`;
+  for (const [g, fields] of FIELDS) {
+    let rowsH = "";
+    for (const [label, get, cls, val, dir] of fields) {
+      const vals = items.map(r => { const v = get(r); return v == null || v === "" ? "—" : v; });
+      const differ = new Set(vals.map(String)).size > 1;
+      if (onlyDiff && !differ) continue;
+      let best = -1;
+      if (val && differ) {
+        const nums = items.map(val);
+        const valid = nums.filter(x => x != null && !isNaN(x));
+        if (valid.length > 1) { const target = dir > 0 ? Math.max(...valid) : Math.min(...valid); if (valid.filter(x => x === target).length === 1) best = nums.indexOf(target); }
+      }
+      rowsH += `<tr class="${differ ? "diff" : ""}"><th>${label}</th>${vals.map((v, i) => `<td class="${cls || ""} ${i === best ? "best" : ""}">${esc(v)}</td>`).join("")}</tr>`;
+    }
+    if (rowsH) h += `<tr class="grp"><th colspan="${items.length + 1}">${g}</th></tr>` + rowsH;
+  }
+  // full manufacturer specs, aligned by label
+  const sheets = items.map(r => raw[r.id] || {});
+  const labels = new Map();
+  sheets.forEach(s => Object.entries(s).forEach(([g, o]) => Object.keys(o || {}).forEach(k => { const key = k.trim(); if (!labels.has(g)) labels.set(g, new Set()); labels.get(g).add(key); })));
+  // group by manufacturer group names; for mixed brands, groups simply stack
+  let fullH = "";
+  for (const [g, set] of labels) {
+    let gh = "";
+    for (const k of set) {
+      const vals = sheets.map(s => (s[g] && s[g][k]) ?? "");
+      if (vals.filter(Boolean).length === 0) continue;
+      const differ = new Set(vals).size > 1;
+      if (onlyDiff && !differ) continue;
+      gh += `<tr class="${differ ? "diff" : ""}"><th>${esc(k)}</th>${vals.map(v => `<td>${v ? esc(v) : '<span class="muted">—</span>'}</td>`).join("")}</tr>`;
+    }
+    if (gh) fullH += `<tr class="grp"><th colspan="${items.length + 1}">Manufacturer sheet · ${esc(g)}</th></tr>` + gh;
+  }
+  h += fullH + "</tbody></table></div>";
+  h += `<p class="note" style="margin-top:16px">Green marks the single best value in a numeric row. Top section is normalized across brands; the “Manufacturer sheet” rows are each brand’s own wording, aligned where the label matches exactly. Brightness, zones and audio power are the manufacturer’s claims, not lab measurements.</p>`;
+  $("#cmpBody").innerHTML = h;
+}
+
+async function openDetail(id) {
+  const r = ROWS.find(x => x.id === id); if (!r) return;
+  $("#detSheet").hidden = false; document.body.style.overflow = "hidden";
+  $("#detTitle").textContent = r.name;
+  $("#detSub").innerHTML = `${esc(r.brand)} · ${esc(r.model)} · <a href="${esc(r.url)}" target="_blank" rel="noopener">manufacturer page ↗</a>`;
+  const top = `<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:4px 0 12px">${techTag(r.tech)}<span class="b on">${esc(r.resolution || "")}</span>${r.refreshMax ? `<span class="b on">${r.refreshMax} Hz</span>` : ""}${r.dolbyVision ? '<span class="b on">Dolby Vision</span>' : ""}${r.hdr10plus ? '<span class="b on">HDR10+</span>' : ""}${r.price != null ? `<span class="price" style="margin-left:auto;font-size:16px">${money(r.price)}</span>` : ""}
+    <button class="btn ${st.cmp.includes(r.id) ? "" : "primary"}" type="button" data-cmp-det="${esc(r.id)}">${st.cmp.includes(r.id) ? "Remove from compare" : "Add to compare"}</button></div>`;
+  const notes = [];
+  if (r.region && r.region !== "US") notes.push(`Specs taken from Sony's ${esc(r.region)} site because Sony's US store blocks automated access. Model specs are shared globally; check the US page for US-only features such as ATSC 3.0.`);
+  if (r.derived) notes.push("Hisense publishes no spec table for this model, so the fields below were read from its product description and may be incomplete.");
+  $("#detBody").innerHTML = top + (notes.length ? `<p class="note">${notes.join("<br>")}</p>` : "") + '<div class="loading">Loading spec sheet…</div>';
+  const raw = await ensureRaw();
+  const s = raw[r.id] || {};
+  let h = '<div class="kv">';
+  for (const [g, o] of Object.entries(s)) { h += `<h3>${esc(g)}</h3>`; for (const [k, v] of Object.entries(o || {})) h += `<div>${esc(k)}</div><div>${esc(v)}</div>`; }
+  h += "</div>";
+  $("#detBody").innerHTML = top + (notes.length ? `<p class="note">${notes.join("<br>")}</p>` : "") + h;
+}
+
+function closeSheets() { document.querySelectorAll(".sheet").forEach(s => s.hidden = true); document.body.style.overflow = ""; }
+
+function about() {
+  $("#aboutSheet").hidden = false;
+  const by = countBy(ROWS, r => r.brand);
+  const src = META.sources || {};
+  $("#aboutBody").innerHTML = `<p>Every row comes from the manufacturer's own website, scraped on <b>${esc(META.scraped || "")}</b>. No third-party review data is mixed in.</p>
+  <div class="srcs">${Object.keys(by).sort().map(b => `<div><b>${esc(b)}</b><span>${by[b]} models · <span class="muted">${esc((src[b] || {}).how || "")}</span></span></div>`).join("")}</div>
+  <h3 style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-top:22px">Read before you buy</h3>
+  <ul style="padding-left:18px;color:var(--ink-2);display:grid;gap:6px">
+   <li>Prices are what each brand's own store showed that day. Samsung, LG and TCL list prices; Sony, Hisense and Vizio sell through retailers, so their rows have none.</li>
+   <li>Sony's US store blocks automated access, so Sony specs come from Sony UK. The panels, processors and HDMI specs match the US models; prices and tuner features don't apply.</li>
+   <li>Hisense publishes full spec tables for only some models. Where it doesn't, key specs were read from the product description and the row is marked.</li>
+   <li>The catalog includes older models a brand still lists. Use the model-year filter for the current lineup.</li>
+   <li>Brightness, dimming zones and speaker wattage are manufacturer claims, not measurements, and brands measure them differently.</li>
+   <li>“Panel type” is normalized: Samsung Neo QLED and LG QNED Mini LED count as Mini-LED; Samsung Micro RGB, Sony True RGB, Hisense and TCL RGB Mini-LED count as RGB Mini-LED.</li>
+   <li>Manufacturers may also make monitors, but this catalog covers TVs only.</li>
+  </ul>`;
+}
+
+function readNum(id) { const v = $(id).value.trim(); return v === "" ? null : Number(v); }
+
+function wire() {
+  document.addEventListener("click", e => {
+    const t = e.target;
+    const chip = t.closest(".chip[data-k]");
+    if (chip) { const k = chip.dataset.k, v = chip.dataset.v; st[k].has(v) ? st[k].delete(v) : st[k].add(v); chip.setAttribute("aria-pressed", st[k].has(v)); render(); return; }
+    const rf = t.closest("[data-refresh]");
+    if (rf) { st.refresh = Number(rf.dataset.refresh); document.querySelectorAll("[data-refresh]").forEach(b => b.setAttribute("aria-pressed", b === rf)); render(); return; }
+    const sp = t.closest("[data-smin]");
+    if (sp) { const on = sp.getAttribute("aria-pressed") === "true"; document.querySelectorAll("[data-smin]").forEach(b => b.setAttribute("aria-pressed", "false"));
+      if (on) { st.sizeMin = st.sizeMax = null; $("#sizeMin").value = $("#sizeMax").value = ""; } else { st.sizeMin = +sp.dataset.smin; st.sizeMax = +sp.dataset.smax; $("#sizeMin").value = st.sizeMin || ""; $("#sizeMax").value = st.sizeMax < 999 ? st.sizeMax : ""; sp.setAttribute("aria-pressed", "true"); }
+      render(); return; }
+    const cl = t.closest("[data-clear]");
+    if (cl) { st[cl.dataset.clear].clear(); buildFilters(); render(); return; }
+    const cb = t.closest("[data-cmp]");
+    if (cb) { e.stopPropagation(); toggleCmp(cb.dataset.cmp); return; }
+    const un = t.closest("[data-uncmp]");
+    if (un) { toggleCmp(un.dataset.uncmp); return; }
+    const cd = t.closest("[data-cmp-det]");
+    if (cd) { toggleCmp(cd.dataset.cmpDet); openDetail(cd.dataset.cmpDet); return; }
+    const th = t.closest("th[data-col]");
+    if (th && COLSORT[th.dataset.col]) { st.sort = COLSORT[th.dataset.col]; $("#sortSel").value = st.sort; render(); return; }
+    const gr = t.closest("#tbody tr.grp-row");
+    if (gr) { const k = gr.dataset.group; st.open.has(k) ? st.open.delete(k) : st.open.add(k); render(); return; }
+    const tr = t.closest("#tbody tr");
+    if (tr && !t.closest("a,input")) { openDetail(tr.dataset.id); return; }
+    if (t.closest("[data-close]") || t.classList.contains("sheet")) { closeSheets(); return; }
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheets(); });
+  document.addEventListener("change", e => { const f = e.target.dataset && e.target.dataset.feat; if (f) { e.target.checked ? st.feat.add(f) : st.feat.delete(f); render(); } });
+  let qt; $("#q").addEventListener("input", e => { clearTimeout(qt); qt = setTimeout(() => { st.q = e.target.value.trim(); render(); }, 120); });
+  for (const [id, k] of [["#sizeMin", "sizeMin"], ["#sizeMax", "sizeMax"], ["#priceMin", "priceMin"], ["#priceMax", "priceMax"]])
+    $(id).addEventListener("input", () => { st[k] = readNum(id); if (k.startsWith("size")) document.querySelectorAll("[data-smin]").forEach(b => b.setAttribute("aria-pressed", "false")); render(); });
+  $("#hasPrice").addEventListener("change", e => { st.hasPrice = e.target.checked; render(); });
+  $("#sortSel").innerHTML = SORTS.map(([k, l]) => `<option value="${k}">${l}</option>`).join("");
+  $("#sortSel").addEventListener("change", e => { st.sort = e.target.value; render(); });
+  const setGroup = on => { st.group = on; $("#viewGroup").setAttribute("aria-pressed", on); $("#viewAll").setAttribute("aria-pressed", !on); render(); };
+  $("#viewGroup").addEventListener("click", () => setGroup(true));
+  $("#viewAll").addEventListener("click", () => setGroup(false));
+  $("#doCmp").addEventListener("click", openCompare);
+  $("#clearCmp").addEventListener("click", () => { st.cmp = []; render(); });
+  $("#onlyDiff").addEventListener("change", async () => { const items = st.cmp.map(id => ROWS.find(r => r.id === id)).filter(Boolean); drawCompare(items, await ensureRaw()); });
+  $("#aboutBtn").addEventListener("click", about);
+  const reset = () => { for (const k of ["brand", "tech", "resolution", "year", "os", "feat"]) st[k].clear(); Object.assign(st, { q: "", sizeMin: null, sizeMax: null, priceMin: null, priceMax: null, hasPrice: false, refresh: 0 });
+    for (const id of ["#q", "#sizeMin", "#sizeMax", "#priceMin", "#priceMax"]) $(id).value = ""; $("#hasPrice").checked = false; buildFilters(); render(); };
+  $("#resetAll").addEventListener("click", reset); $("#emptyReset").addEventListener("click", reset);
+  $("#railOpen").addEventListener("click", () => $("#rail").classList.add("open"));
+  $("#railClose").addEventListener("click", () => $("#rail").classList.remove("open"));
+}
+
+/* ---------------- 16:9 diagonal size slider ---------------- */
+// The frame is a 16:9 screen; its diagonal is the slider track from bottom-left (smallest) to top-right (largest).
+// The rectangle from the bottom-left corner to each handle is itself 16:9, so it previews that screen size.
+const SB = { lo: 24, hi: 116, W: 160, H: 90, drag: null };
+const sbT = s => (clamp(s, SB.lo, SB.hi) - SB.lo) / (SB.hi - SB.lo);
+const sbPt = s => { const t = sbT(s); return [SB.W * t, SB.H - SB.H * t]; };
+const sbVals = () => [st.sizeMin ?? SB.lo, st.sizeMax ?? SB.hi];
+function drawSizeBox() {
+  const svg = $("#sizeSvg"); if (!svg) return;
+  const [a, b] = sbVals(), [ax, ay] = sbPt(a), [bx, by] = sbPt(b), H = SB.H;
+  let g = `<rect class="sb-frame" x="0" y="0" width="${SB.W}" height="${H}" rx="2"/>`;
+  g += `<rect class="sb-max" x="0" y="${by}" width="${bx}" height="${H - by}" rx="1.5"/>`;
+  if (a > SB.lo) g += `<rect class="sb-min" x="0" y="${ay}" width="${ax}" height="${H - ay}" rx="1"/>`;
+  for (const s of [32, 55, 75, 98]) { const [x, y] = sbPt(s); g += `<text class="sb-tick" x="${x + 3}" y="${y + 6}">${s}</text>`; }
+  g += `<line class="sb-track" x1="0" y1="${H}" x2="${SB.W}" y2="0"/><line class="sb-sel" x1="${ax}" y1="${ay}" x2="${bx}" y2="${by}"/>`;
+  g += `<line class="sb-hit" x1="0" y1="${H}" x2="${SB.W}" y2="0"/>`;
+  const lbl = (v, edge) => edge ? (v === SB.lo ? "Any" : "Any") : v + '"';
+  g += `<g class="sb-thumb${SB.drag === 0 ? " active" : ""}" data-th="0" tabindex="0" role="slider" aria-label="Minimum size" aria-valuemin="${SB.lo}" aria-valuemax="${SB.hi}" aria-valuenow="${a}" aria-valuetext="${a === SB.lo ? "No minimum" : a + " inches"}"><circle cx="${ax}" cy="${ay}" r="5"/></g>`;
+  g += `<g class="sb-thumb${SB.drag === 1 ? " active" : ""}" data-th="1" tabindex="0" role="slider" aria-label="Maximum size" aria-valuemin="${SB.lo}" aria-valuemax="${SB.hi}" aria-valuenow="${b}" aria-valuetext="${b === SB.hi ? "No maximum" : b + " inches"}"><circle cx="${bx}" cy="${by}" r="5"/></g>`;
+  g += `<text class="sb-val" x="${Math.min(ax + 8, 120)}" y="${Math.min(ay + 3, H - 2)}">${a === SB.lo ? "" : a + '"'}</text>`;
+  g += `<text class="sb-val" x="${Math.max(bx - 8, 30)}" y="${Math.max(by - 7, 3)}" text-anchor="end">${b === SB.hi ? "Any" : b + '"'} max</text>`;
+  g += `<text class="sb-val" x="4" y="10" style="font-weight:500;fill:var(--ink-2)">${a === SB.lo && b === SB.hi ? "Any size" : (a === SB.lo ? "Up to " + b + '"' : b === SB.hi ? a + '" and up' : a + '"–' + b + '"')}</text>`;
+  const focused = document.activeElement && document.activeElement.closest && document.activeElement.closest("#sizeSvg [data-th]");
+  const keep = focused ? focused.dataset.th : null;
+  svg.innerHTML = g;
+  if (keep != null) svg.querySelector(`[data-th="${keep}"]`).focus();
+}
+function setSize(which, v) {
+  let [a, b] = sbVals(); v = Math.round(clamp(v, SB.lo, SB.hi));
+  if (which === 0) a = Math.min(v, b - 1); else b = Math.max(v, a + 1);
+  st.sizeMin = a <= SB.lo ? null : a; st.sizeMax = b >= SB.hi ? null : b;
+  $("#sizeMin").value = st.sizeMin ?? ""; $("#sizeMax").value = st.sizeMax ?? "";
+  document.querySelectorAll("[data-smin]").forEach(x => x.setAttribute("aria-pressed", String((st.sizeMin ?? 0) === +x.dataset.smin && (st.sizeMax ?? 999) === +x.dataset.smax)));
+  render();
+}
+function initSizeBox() {
+  const svg = $("#sizeSvg");
+  const tAt = e => { const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY; const q = p.matrixTransform(svg.getScreenCTM().inverse());
+    return clamp((q.x * SB.W + (SB.H - q.y) * SB.H) / (SB.W * SB.W + SB.H * SB.H), 0, 1); };
+  const val = t => SB.lo + t * (SB.hi - SB.lo);
+  svg.addEventListener("pointerdown", e => {
+    const t = tAt(e), v = val(t), [a, b] = sbVals();
+    const th = e.target.closest("[data-th]");
+    SB.drag = th ? +th.dataset.th : (Math.abs(v - a) <= Math.abs(v - b) ? (v > b ? 1 : 0) : 1);
+    if (!th) setSize(SB.drag, v); else drawSizeBox();
+    svg.setPointerCapture(e.pointerId); e.preventDefault();
+  });
+  svg.addEventListener("pointermove", e => { if (SB.drag == null) return; setSize(SB.drag, val(tAt(e))); });
+  const end = () => { if (SB.drag == null) return; SB.drag = null; drawSizeBox(); };
+  svg.addEventListener("pointerup", end); svg.addEventListener("pointercancel", end);
+  svg.addEventListener("keydown", e => {
+    const th = e.target.closest("[data-th]"); if (!th) return; const i = +th.dataset.th, cur = sbVals()[i];
+    const step = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1, PageUp: 5, PageDown: -5 }[e.key];
+    if (step) { setSize(i, cur + step); e.preventDefault(); }
+    else if (e.key === "Home") { setSize(i, SB.lo); e.preventDefault(); } else if (e.key === "End") { setSize(i, SB.hi); e.preventDefault(); }
+  });
+  $("#sizeAny").addEventListener("click", () => { st.sizeMin = st.sizeMax = null; setSize(0, SB.lo); });
+}
+
+/* ---------------- Tabs ---------------- */
+function showTab(name) {
+  document.querySelectorAll("[data-tab]").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === name));
+  for (const v of ["compare", "match", "wall"]) $("#view-" + v).hidden = v !== name;
+  if (name === "match") renderMatch();
+  if (name === "wall") { if (!WALL.tvs.length) seedWall(); renderWall(); }
+  store.set("tab", name);
+  try { history.replaceState(null, "", "#" + name); } catch {}
+}
+
+/* ---------------- Find my TV (weighted score) ---------------- */
+const TECHQ = { "OLED": { bright: 58, dark: 100, motion: 95 }, "RGB Mini-LED": { bright: 100, dark: 86, motion: 78 }, "Mini-LED": { bright: 90, dark: 76, motion: 72 },
+  "QLED / QNED": { bright: 62, dark: 45, motion: 60 }, "LED": { bright: 42, dark: 30, motion: 50 }, "MicroLED": { bright: 100, dark: 100, motion: 95 } };
+const clamp = (v, a = 0, b = 100) => Math.max(a, Math.min(b, v));
+const lerp = (x, pts) => { if (x == null) return null; if (x <= pts[0][0]) return pts[0][1]; for (let i = 1; i < pts.length; i++) if (x <= pts[i][0]) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i]; return y0 + (y1 - y0) * (x - x0) / (x1 - x0); } return pts[pts.length - 1][1]; };
+const MATCH = { dist: 9, budget: null, os: "", sizeMin: null, sizeMax: null, current: true, priced: false, brands: new Set(), series: true,
+  w: { bright: 3, dark: 3, gaming: 2, sports: 2, sound: 1, smart: 1, value: 2, fit: 4, newest: 1 } };
+Object.assign(MATCH.w, store.get("weights", {}));
+const CRIT = [
+  ["bright", "Bright-room viewing", "Peak brightness, panel type, anti-glare screen", r => {
+    const t = TECHQ[r.tech] || TECHQ.LED; const n = r.nits ? lerp(Math.log10(r.nits), [[2.5, 0], [3, 45], [3.5, 80], [3.8, 100]]) : null;
+    return clamp((n == null ? t.bright : t.bright * 0.55 + n * 0.45) + (r.antiGlare ? 8 : 0)); }],
+  ["dark", "Movies in a dark room", "Contrast (OLED / local dimming), Dolby Vision, Filmmaker Mode", r => {
+    const t = TECHQ[r.tech] || TECHQ.LED; let s = t.dark * 0.7 + (r.dolbyVision ? 16 : 0) + (r.hdr10plus ? 5 : 0) + (r.filmmaker ? 5 : 0) + (r.imax ? 4 : 0);
+    if (r.tech !== "OLED" && r.localDimming) s += 4; return clamp(s); }],
+  ["gaming", "Gaming", "Max refresh, HDMI 2.1 ports, VRR / ALLM, G-Sync or FreeSync", r => {
+    const hz = lerp(r.refreshMax, [[60, 5], [100, 45], [120, 62], [144, 82], [165, 95], [240, 100]]);
+    if (hz == null) return null;
+    const h21 = r.hdmi21 != null ? lerp(r.hdmi21, [[0, 0], [1, 45], [2, 70], [4, 100]]) : (r.refreshMax >= 120 ? 50 : 0);
+    return clamp(hz * 0.5 + h21 * 0.25 + (r.vrr ? 10 : 0) + (r.allm ? 5 : 0) + (r.gsync || r.freesync ? 10 : 0)); }],
+  ["sports", "Sports & fast motion", "Native refresh rate and panel motion handling", r => {
+    const hz = lerp(r.refresh || r.refreshMax, [[50, 20], [60, 30], [100, 75], [120, 85], [144, 100]]);
+    const t = TECHQ[r.tech] || TECHQ.LED; return hz == null ? null : clamp(hz * 0.6 + t.motion * 0.4); }],
+  ["sound", "Built-in sound", "Speaker power, Dolby Atmos, up-firing channels", r => {
+    const w = lerp(r.audioW, [[10, 5], [20, 30], [40, 60], [60, 78], [100, 100]]);
+    if (w == null && !r.atmos) return null;
+    const up = /\d\.\d\.[1-9]/.test(r.channels || "") ? 15 : 0;
+    return clamp((w ?? 30) * 0.6 + (r.atmos ? 25 : 0) + up); }],
+  ["smart", "Streaming & smart home", "AirPlay, Chromecast, Alexa, Wi-Fi 6 or newer", r => clamp((r.airplay ? 25 : 0) + (r.chromecast ? 25 : 0) + (r.alexa ? 20 : 0) + (/6|7/.test(r.wifi || "") ? 20 : r.wifi ? 8 : 0) + (r.bluetooth ? 10 : 0))],
+  ["value", "Low price per inch", "Price on the manufacturer's site divided by screen size", r => r.price && r.size ? lerp(Math.log10(r.price / r.size), [[0.8, 100], [1.2, 75], [1.5, 50], [1.8, 22], [2.1, 0]]) : null],
+  ["fit", "Right size for my seat", "How close the size is to the ideal for your seating distance", r => {
+    if (!r.size) return null; const ideal = idealSize(MATCH.dist); const dev = (r.size - ideal) / ideal;
+    return clamp(100 - Math.abs(dev) * (dev > 0 ? 180 : 230)); }],
+  ["newest", "Newest model", "Model year", r => r.year ? lerp(r.year, [[2021, 5], [2023, 30], [2024, 55], [2025, 82], [2026, 100]]) : null],
+];
+const PRESETS = [
+  ["Balanced", { bright: 3, dark: 3, gaming: 2, sports: 2, sound: 1, smart: 1, value: 2, fit: 4, newest: 1 }],
+  ["Bright living room", { bright: 5, dark: 1, gaming: 1, sports: 3, sound: 1, smart: 1, value: 2, fit: 4, newest: 1 }],
+  ["Movie night", { bright: 1, dark: 5, gaming: 0, sports: 1, sound: 3, smart: 1, value: 1, fit: 4, newest: 1 }],
+  ["Gaming", { bright: 2, dark: 2, gaming: 5, sports: 2, sound: 1, smart: 0, value: 2, fit: 3, newest: 1 }],
+  ["Sports fan", { bright: 4, dark: 1, gaming: 1, sports: 5, sound: 2, smart: 1, value: 2, fit: 4, newest: 1 }],
+  ["Best value", { bright: 2, dark: 2, gaming: 1, sports: 1, sound: 0, smart: 1, value: 5, fit: 4, newest: 0 }],
+];
+const WLBL = ["Off", "A little", "Some", "Matters", "A lot", "Top priority"];
+// Ideal diagonal ≈ distance / 1.4 (between SMPTE 30° and THX 40° field of view)
+const idealSize = ft => ft * 12 / 1.4;
+const sizeRange = ft => [Math.round(ft * 12 / 1.63), Math.round(ft * 12 / 1.2)];
+
+function scoreRow(r) {
+  let sw = 0, tot = 0, missing = []; const parts = {};
+  for (const [k, label, , f] of CRIT) {
+    const w = MATCH.w[k]; if (!w) continue;
+    const s = f(r);
+    if (s == null) { missing.push(label); parts[k] = null; continue; }
+    parts[k] = s; tot += s * w; sw += w;
+  }
+  // Unknown criteria drop out of the average; each costs 3 points of confidence (max 9).
+  const pen = Math.min(9, missing.length * 3);
+  return { score: sw ? Math.max(0, Math.round(tot / sw) - pen) : 0, parts, missing };
+}
+
+function initMatch() {
+  $("#presets").innerHTML = PRESETS.map(([n], i) => `<button type="button" class="chip" data-preset="${i}">${esc(n)}</button>`).join("");
+  $("#sliders").innerHTML = CRIT.map(([k, label, desc]) => `<div class="sl"><label for="w-${k}">${esc(label)}</label><span class="w" id="wl-${k}"></span>
+    <input type="range" id="w-${k}" min="0" max="5" step="1" value="${MATCH.w[k]}" data-w="${k}"><div class="d">${esc(desc)}</div></div>`).join("");
+  const oss = [...new Set(ROWS.map(r => r.os).filter(Boolean))].sort();
+  $("#mOs").innerHTML = '<option value="">Any platform</option>' + oss.map(o => `<option>${esc(o)}</option>`).join("");
+  $("#mBrands").innerHTML = [...new Set(ROWS.map(r => r.brand))].sort().map(b => `<button type="button" class="chip" data-mbrand="${esc(b)}" aria-pressed="false">${esc(b)}</button>`).join("");
+  const upd = () => { for (const [k] of CRIT) $("#wl-" + k).textContent = WLBL[MATCH.w[k]]; };
+  upd();
+  $("#sliders").addEventListener("input", e => { const k = e.target.dataset.w; if (!k) return; MATCH.w[k] = +e.target.value; store.set("weights", MATCH.w); upd(); renderMatch(); });
+  $("#presets").addEventListener("click", e => { const b = e.target.closest("[data-preset]"); if (!b) return; Object.assign(MATCH.w, PRESETS[+b.dataset.preset][1]);
+    for (const [k] of CRIT) $("#w-" + k).value = MATCH.w[k]; store.set("weights", MATCH.w); upd(); renderMatch(); });
+  $("#mBrands").addEventListener("click", e => { const b = e.target.closest("[data-mbrand]"); if (!b) return; const v = b.dataset.mbrand; MATCH.brands.has(v) ? MATCH.brands.delete(v) : MATCH.brands.add(v); b.setAttribute("aria-pressed", MATCH.brands.has(v)); renderMatch(); });
+  const dist = () => { MATCH.dist = +$("#distFt").value; $("#distOut").textContent = MATCH.dist + " ft"; const [a, b] = sizeRange(MATCH.dist);
+    $("#distHint").textContent = `From ${MATCH.dist} ft, ${a}"–${b}" fills a comfortable 30–40° of your view. Ideal ≈ ${Math.round(idealSize(MATCH.dist))}".`; };
+  $("#distFt").value = store.get("dist", 9); dist();
+  $("#distFt").addEventListener("input", () => { dist(); store.set("dist", MATCH.dist); renderMatch(); });
+  for (const [id, k] of [["#mBudget", "budget"], ["#mSizeMin", "sizeMin"], ["#mSizeMax", "sizeMax"]]) $(id).addEventListener("input", () => { MATCH[k] = readNum(id); renderMatch(); });
+  $("#mOs").addEventListener("change", e => { MATCH.os = e.target.value; renderMatch(); });
+  $("#mCurrent").addEventListener("change", e => { MATCH.current = e.target.checked; renderMatch(); });
+  $("#mPriced").addEventListener("change", e => { MATCH.priced = e.target.checked; renderMatch(); });
+  $("#mAll").addEventListener("click", () => { MATCH.series = false; $("#mAll").setAttribute("aria-pressed", "true"); $("#mSeries").setAttribute("aria-pressed", "false"); renderMatch(); });
+  $("#mSeries").addEventListener("click", () => { MATCH.series = true; $("#mSeries").setAttribute("aria-pressed", "true"); $("#mAll").setAttribute("aria-pressed", "false"); renderMatch(); });
+  $("#rank").addEventListener("click", e => {
+    const a = e.target.closest("[data-rcmp]"); if (a) { toggleCmp(a.dataset.rcmp); renderMatch(); return; }
+    const w = e.target.closest("[data-rwall]"); if (w) { addWallTv(ROWS.find(r => r.id === w.dataset.rwall)); showTab("wall"); return; }
+    const d = e.target.closest("[data-rdet]"); if (d) openDetail(d.dataset.rdet);
+  });
+}
+
+function renderMatch() {
+  if ($("#view-match").hidden) return;
+  const maxYear = Math.max(...ROWS.map(r => r.year || 0));
+  let rows = ROWS.filter(r => {
+    if (MATCH.current && !(r.year >= maxYear - 1)) return false;
+    if (MATCH.priced && r.price == null) return false;
+    if (MATCH.budget != null && !(r.price != null && r.price <= MATCH.budget)) return false;
+    if (MATCH.os && r.os !== MATCH.os) return false;
+    if (MATCH.sizeMin != null && !(r.size >= MATCH.sizeMin)) return false;
+    if (MATCH.sizeMax != null && !(r.size <= MATCH.sizeMax)) return false;
+    if (MATCH.brands.size && !MATCH.brands.has(r.brand)) return false;
+    return true;
+  }).map(r => ({ r, ...scoreRow(r) }));
+  rows.sort((a, b) => b.score - a.score || a.missing.length - b.missing.length || (a.r.price ?? 1e9) - (b.r.price ?? 1e9));
+  if (MATCH.series) { const seen = new Set(); rows = rows.filter(x => { const k = x.r.brand + "|" + (x.r.series || x.r.model) + "|" + (x.r.year || ""); if (seen.has(k)) return false; seen.add(k); return true; }); }
+  $("#mCount").innerHTML = `<b>${rows.length}</b> ${MATCH.series ? "series" : "TVs"} ranked · showing top ${Math.min(40, rows.length)}`;
+  const active = CRIT.filter(([k]) => MATCH.w[k] > 0);
+  const cmp = new Set(st.cmp);
+  $("#rank").innerHTML = rows.slice(0, 40).map((x, i) => {
+    const r = x.r;
+    const top = active.slice().sort((a, b) => (x.parts[b[0]] ?? 0) * MATCH.w[b[0]] - (x.parts[a[0]] ?? 0) * MATCH.w[a[0]]).slice(0, 2).map(c => c[1].toLowerCase());
+    return `<li class="rk"><div class="score" style="--s:${x.score}" aria-label="Score ${x.score} out of 100"><span>${x.score}</span></div>
+      <div style="min-width:0"><div class="nm"><span class="muted mono" style="font-size:12px">#${i + 1}</span> <span class="brand">${esc(r.brand)}</span> ${esc(r.series || "")} · ${r.size || "?"}"</div>
+      <div class="sub">${esc(r.model)} · ${esc(r.tech)} · ${r.refreshMax ? r.refreshMax + " Hz" : "—"}${r.dolbyVision ? " · Dolby Vision" : ""}${r.year ? " · " + r.year : ""}</div>
+      <div class="why">Strongest on ${esc(top.join(" and "))}.</div>
+      <div class="bars2">${active.map(([k, label]) => `<span class="bar2" title="${esc(label)}: ${x.parts[k] == null ? "no data" : Math.round(x.parts[k])}">${esc(label.split(" ")[0])}<i><b style="width:${Math.round(x.parts[k] ?? 0)}%"></b></i></span>`).join("")}</div>
+      ${x.missing.length ? `<div class="flag">Not in the manufacturer's data: ${esc(x.missing.join(", "))}. Left out of the score, −${Math.min(9, x.missing.length * 3)} for uncertainty.</div>` : ""}</div>
+      <div class="side">${r.price != null ? `<span class="price">${money(r.price)}</span>` : '<span class="muted" style="font-size:12px">No price listed</span>'}
+        <button class="btn" type="button" data-rdet="${esc(r.id)}">Specs</button>
+        <button class="btn" type="button" data-rwall="${esc(r.id)}">Put on wall</button>
+        <button class="btn ${cmp.has(r.id) ? "" : "primary"}" type="button" data-rcmp="${esc(r.id)}">${cmp.has(r.id) ? "In compare ✓" : "Compare"}</button></div></li>`;
+  }).join("") || '<li class="empty">No TVs fit those hard limits. Raise the budget or widen the size range.</li>';
+}
+
+/* ---------------- Size on your wall ---------------- */
+const FURN = [
+  ["sofa", "3-seat sofa", 84, 34], ["loveseat", "Loveseat", 60, 34], ["console", "Media console", 70, 22], ["fireplace", "Fireplace", 60, 44],
+  ["shelf", "Bookshelf", 36, 72], ["lamp", "Floor lamp", 14, 62], ["door", "Door", 36, 80], ["person", "Person 5′9″", 20, 69], ["soundbar", "Soundbar", 40, 3],
+];
+const WALL = { w: 14, h: 8.5, tvs: [], furn: [], overlay: false };
+const TVCOL = ["--accent", "--t-rgb", "--t-qled", "--t-micro", "--t-oled"];
+function tvDims(r, diag) {
+  const m = r && r.dimsIn && r.dimsIn.match(/([\d.]+) × ([\d.]+)/);
+  if (m && +m[1] > +m[2]) return { w: +m[1], h: +m[2], real: true };
+  const d = diag || (r && r.size) || 65; return { w: d * 0.8716 + 1.2, h: d * 0.4903 + 1.2, real: false };
+}
+function addWallTv(r, diag) {
+  const d = r ? r.size : diag; if (!d) return;
+  const dims = tvDims(r, d); const i = WALL.tvs.length;
+  WALL.tvs.push({ key: (r ? r.id : "g" + d) + ":" + Date.now() + i, label: r ? `${r.brand} ${r.series || r.model} ${d}"` : `Generic ${d}" (16:9)`, diag: d, ...dims, x: null, y: 48 });
+  layoutWall(); renderWall();
+}
+function layoutWall() {
+  const W = WALL.w * 12, n = WALL.tvs.length;
+  if (WALL.overlay) WALL.tvs.forEach(t => { t.x = W / 2; });
+  else { const total = WALL.tvs.reduce((s, t) => s + t.w, 0) + (n - 1) * 10; let x = W / 2 - total / 2; WALL.tvs.forEach(t => { if (t._moved) return; t.x = x + t.w / 2; x += t.w + 10; }); }
+}
+function addFurn(type) {
+  const f = FURN.find(x => x[0] === type); const W = WALL.w * 12;
+  const y = type === "soundbar" ? 30 : 0;
+  WALL.furn.push({ key: type + Date.now(), type, label: f[1], w: f[2], h: f[3], x: W / 2 + (WALL.furn.length % 3 - 1) * 30, y });
+  renderWall();
+}
+function seedWall() {
+  const picks = st.cmp.map(id => ROWS.find(r => r.id === id)).filter(Boolean);
+  if (picks.length) picks.forEach(r => addWallTv(r)); else [65, 77, 85].forEach(d => addWallTv(null, d));
+  WALL.furn.push({ key: "c0", type: "console", label: "Media console", w: 70, h: 22, x: WALL.w * 6, y: 0 });
+  WALL.furn.push({ key: "p0", type: "person", label: "Person 5′9″", w: 20, h: 69, x: WALL.w * 12 - 26, y: 0 });
+}
+function furnShape(f, X, Y) {
+  // X,Y = top-left in SVG coords; simple silhouettes
+  const { w, h, type } = f;
+  if (type === "person") return `<g class="furn"><circle cx="${X + w / 2}" cy="${Y + 5}" r="4.6"/><rect x="${X + 3}" y="${Y + 11}" width="${w - 6}" height="${h * .42}" rx="4"/><rect x="${X + 4.5}" y="${Y + 11 + h * .4}" width="${w / 2 - 5}" height="${h - 11 - h * .4}" rx="2"/><rect x="${X + w / 2 + .5}" y="${Y + 11 + h * .4}" width="${w / 2 - 5}" height="${h - 11 - h * .4}" rx="2"/></g>`;
+  if (type === "sofa" || type === "loveseat") return `<g class="furn"><rect x="${X}" y="${Y + 8}" width="${w}" height="${h - 12}" rx="5"/><rect x="${X - 1}" y="${Y + 14}" width="9" height="${h - 18}" rx="4"/><rect x="${X + w - 8}" y="${Y + 14}" width="9" height="${h - 18}" rx="4"/><rect x="${X + 6}" y="${Y + h - 4}" width="3" height="4"/><rect x="${X + w - 9}" y="${Y + h - 4}" width="3" height="4"/></g>`;
+  if (type === "lamp") return `<g class="furn"><path d="M${X} ${Y + 14} L${X + 3} ${Y} L${X + w - 3} ${Y} L${X + w} ${Y + 14} Z"/><rect x="${X + w / 2 - .8}" y="${Y + 14}" width="1.6" height="${h - 16}"/><rect x="${X + 2}" y="${Y + h - 2}" width="${w - 4}" height="2" rx="1"/></g>`;
+  if (type === "door") return `<g class="furn"><rect x="${X}" y="${Y}" width="${w}" height="${h}" rx="1"/><circle cx="${X + w - 5}" cy="${Y + h / 2}" r="1.3" fill="var(--panel)"/></g>`;
+  if (type === "shelf") return `<g class="furn"><rect x="${X}" y="${Y}" width="${w}" height="${h}" rx="1"/>${[1, 2, 3, 4].map(i => `<line x1="${X}" x2="${X + w}" y1="${Y + h * i / 5}" y2="${Y + h * i / 5}" stroke="var(--ink-3)" stroke-width=".6"/>`).join("")}</g>`;
+  if (type === "fireplace") return `<g class="furn"><rect x="${X}" y="${Y}" width="${w}" height="4" rx="1"/><rect x="${X + 4}" y="${Y + 4}" width="${w - 8}" height="${h - 4}"/><rect x="${X + w * .25}" y="${Y + h * .4}" width="${w * .5}" height="${h * .6}" rx="3" fill="var(--ink-3)"/></g>`;
+  return `<g class="furn"><rect x="${X}" y="${Y}" width="${w}" height="${h}" rx="2"/></g>`;
+}
+function renderWall() {
+  if ($("#view-wall").hidden) return;
+  const W = WALL.w * 12, H = WALL.h * 12, pad = 10;
+  const svg = $("#wallSvg");
+  svg.setAttribute("viewBox", `${-pad} ${-pad} ${W + pad * 2} ${H + pad * 2 + 6}`);
+  const fy = y => H - y; // floor-based y to svg y
+  let g = `<rect class="wall-bg" x="0" y="0" width="${W}" height="${H}"/>`;
+  for (let x = 12; x < W; x += 12) g += `<line class="grid-l" x1="${x}" x2="${x}" y1="0" y2="${H}"/>`;
+  for (let y = 12; y < H; y += 12) g += `<line class="grid-l" x1="0" x2="${W}" y1="${fy(y)}" y2="${fy(y)}"/><text class="grid-t" x="-8" y="${fy(y) + 1}">${y / 12}′</text>`;
+  for (let x = 0; x <= W; x += 24) g += `<text class="grid-t" x="${x - 1.5}" y="${H + 6}">${x / 12}′</text>`;
+  g += `<rect class="wall-floor" x="-${pad}" y="${H}" width="${W + pad * 2}" height="1.6"/>`;
+  g += `<line class="eye" x1="0" x2="${W}" y1="${fy(42)}" y2="${fy(42)}"/><text class="eye-t" x="2" y="${fy(42) - 1.5}">Seated eye level 42″</text>`;
+  WALL.furn.forEach(f => { g += `<g data-drag="f:${f.key}">${furnShape(f, f.x - f.w / 2, fy(f.y + f.h))}<text class="furn-l" x="${f.x}" y="${fy(f.y + f.h) - 1.5}" text-anchor="middle">${esc(f.label)}</text></g>`; });
+  WALL.tvs.forEach((t, i) => {
+    const col = `var(${TVCOL[i % TVCOL.length]})`, X = t.x - t.w / 2, Y = fy(t.y + t.h / 2);
+    if (WALL.overlay) g += `<g class="tvr" data-drag="t:${t.key}"><rect x="${X}" y="${Y}" width="${t.w}" height="${t.h}" rx=".8" fill="none" stroke="${col}" stroke-width="1"/><text class="tv-l" x="${X + 1.5}" y="${Y + 4}" style="fill:${col}">${t.diag}″</text></g>`;
+    else g += `<g class="tvr" data-drag="t:${t.key}"><rect x="${X}" y="${Y}" width="${t.w}" height="${t.h}" rx=".8" fill="var(--ink)"/><rect class="tv-screen" x="${X + .5}" y="${Y + .5}" width="${t.w - 1}" height="${t.h - 1}" rx=".4"/><rect x="${X}" y="${Y + t.h}" width="${t.w}" height="1.2" fill="${col}"/>
+      <text class="tv-l2" x="${t.x}" y="${Y + t.h / 2}" text-anchor="middle">${t.diag}″</text><text class="tv-l2" x="${t.x}" y="${Y + t.h / 2 + 4}" text-anchor="middle">${t.w.toFixed(1)}″ × ${t.h.toFixed(1)}″</text></g>`;
+  });
+  svg.innerHTML = g;
+  $("#wallTvs").innerHTML = WALL.tvs.map((t, i) => `<div class="wli"><span class="dot" style="background:var(${TVCOL[i % TVCOL.length]})"></span><span class="t" title="${esc(t.label)}">${esc(t.label)} <span class="muted">${t.real ? "· real size" : "· estimated"}</span></span><button type="button" data-wrm="${esc(t.key)}" aria-label="Remove">×</button></div>`).join("") || '<div class="muted" style="font-size:12.5px">No TVs yet. Add a size or use “Put on wall” from Find my TV.</div>';
+  $("#wallLegend").innerHTML = WALL.tvs.map((t, i) => `<span><span class="dot" style="background:var(${TVCOL[i % TVCOL.length]})"></span>${esc(t.label)} · ${t.w.toFixed(1)}″ wide, ${t.h.toFixed(1)}″ tall</span>`).join("") + '<span class="muted">Grid squares are 1 ft. TV outlines include a thin bezel.</span>';
+  const [a, b] = sizeRange(MATCH.dist);
+  $("#wallHint").textContent = `For a ${MATCH.dist} ft seating distance (set in Find my TV), ${a}"–${b}" is the comfortable range. Mount the screen's center near seated eye level, about 42″ off the floor.`;
+}
+function initWall() {
+  $("#addSize").innerHTML = [32, 43, 50, 55, 65, 75, 77, 83, 85, 98, 100, 115].map(s => `<option value="${s}" ${s === 75 ? "selected" : ""}>${s}" generic 16:9</option>`).join("");
+  $("#addSizeBtn").addEventListener("click", () => addWallTv(null, +$("#addSize").value));
+  $("#addCmpBtn").addEventListener("click", () => { st.cmp.map(id => ROWS.find(r => r.id === id)).filter(Boolean).forEach(r => addWallTv(r)); });
+  $("#overlay").addEventListener("change", e => { WALL.overlay = e.target.checked; WALL.tvs.forEach(t => { t._moved = false; t.y = 48; }); layoutWall(); renderWall(); });
+  $("#furnChips").innerHTML = FURN.map(([k, l]) => `<button type="button" class="chip" data-furn="${k}">+ ${esc(l)}</button>`).join("") + '<button type="button" class="chip" id="clearFurn">Clear furniture</button>';
+  $("#furnChips").addEventListener("click", e => { if (e.target.id === "clearFurn") { WALL.furn = []; renderWall(); return; } const b = e.target.closest("[data-furn]"); if (b) addFurn(b.dataset.furn); });
+  $("#wallTvs").addEventListener("click", e => { const b = e.target.closest("[data-wrm]"); if (!b) return; WALL.tvs = WALL.tvs.filter(t => t.key !== b.dataset.wrm); layoutWall(); renderWall(); });
+  for (const [id, k] of [["#wallW", "w"], ["#wallH", "h"]]) $(id).addEventListener("input", () => { const v = readNum(id); if (v && v >= 4 && v <= 40) { WALL[k] = v; layoutWall(); renderWall(); } });
+  const svg = $("#wallSvg"); let drag = null;
+  const pt = e => { const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); };
+  svg.addEventListener("pointerdown", e => {
+    const g = e.target.closest("[data-drag]"); if (!g) return;
+    const [kind, key] = g.dataset.drag.split(/:(.+)/); const obj = (kind === "t" ? WALL.tvs : WALL.furn).find(o => o.key === key); if (!obj) return;
+    const p = pt(e); drag = { obj, kind, dx: p.x - obj.x, dy: (WALL.h * 12 - p.y) - obj.y }; svg.setPointerCapture(e.pointerId); e.preventDefault();
+  });
+  svg.addEventListener("pointermove", e => {
+    if (!drag) return; const p = pt(e), W = WALL.w * 12, H = WALL.h * 12, o = drag.obj;
+    o.x = clamp(p.x - drag.dx, o.w / 2, W - o.w / 2);
+    if (drag.kind === "t") { o.y = clamp((H - p.y) - drag.dy, o.h / 2, H - o.h / 2); o._moved = true; }
+    else o.y = o.type === "soundbar" ? clamp((H - p.y) - drag.dy, 0, H - o.h) : 0; // furniture stays on the floor
+    renderWall();
+  });
+  const end = () => { drag = null; };
+  svg.addEventListener("pointerup", end); svg.addEventListener("pointercancel", end);
+}
+
+async function boot() {
+  wire();
+  try {
+    const d = await (await fetch("tvs.json")).json();
+    ROWS = d.rows; META = d.meta || {};
+  } catch (e) { $("#loading").textContent = "Couldn't load the catalog file. Reload the page to try again."; return; }
+  for (const r of ROWS) r._hay = [r.brand, r.model, r.series, r.name, r.tech, r.os, r.resolution, r.processor, r.dolbyVision && "dolby vision", r.hdr10plus && "hdr10+", r.atmos && "atmos", r.year].filter(Boolean).join(" ").toLowerCase();
+  st.cmp = st.cmp.filter(id => ROWS.some(r => r.id === id));
+  // default view: the current lineup (latest two model years)
+  const yrs = [...new Set(ROWS.map(r => r.year).filter(Boolean))].sort((a, b) => b - a).slice(0, 2);
+  yrs.forEach(y => st.year.add(String(y)));
+  const brands = new Set(ROWS.map(r => r.brand));
+  $("#meta").innerHTML = `<span><b>${ROWS.length}</b> TVs</span><span><b>${brands.size}</b> brands</span><span>Scraped from manufacturer sites <b>${esc(META.scraped || "")}</b></span>`;
+  $("#loading").remove();
+  buildFilters(); render();
+  initSizeBox(); drawSizeBox();
+  initMatch(); initWall();
+  document.querySelectorAll("[data-tab]").forEach(b => b.addEventListener("click", () => showTab(b.dataset.tab)));
+  const h = (location.hash || "").slice(1);
+  const start = ["compare", "match", "wall"].includes(h) ? h : store.get("tab", "compare");
+  if (start !== "compare") showTab(start);
+}
+boot();
+})();
+</script>
+</body>
+</html>
